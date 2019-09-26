@@ -70,7 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>U:\btudor\Code\Git Repos\xyz2lwo C++ Utility\Vector3D;U:\btudor\Code\Git Repos\xyz2lwo C++ Utility\Quaternion;U:\btudor\Code\Git Repos\xyz2lwo C++ Utility\Chemical_Data;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Vector3D;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Quaternion;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Chemical_Data;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Vector3D;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Quaternion;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Chemical_Data;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Vector3D;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Quaternion;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Chemical_Data;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Vector3D;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Quaternion;C:\Users\btudor\Documents\Code\Git Repos\xyz2lwo C++ Utility\Chemical_Data;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -90,6 +99,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,6 +113,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,6 +129,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

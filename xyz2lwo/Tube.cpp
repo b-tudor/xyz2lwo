@@ -77,7 +77,7 @@ int Tube::addPoint( Vector3D p )
 	}
 	
 	points.push_back(p);
-	int idx = points.size()-1;
+	int idx = (int) points.size()-1;
 	int idx2 = 0;
 
 	for (unsigned int i = 0; i < points.size(); i++) {
