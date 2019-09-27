@@ -3,7 +3,7 @@
 cmake_minimum_required (VERSION 3.7)
 project(xyz2lwo)
 
-set(INCLUDE Chemical_Data Vector3D xyz2lwo)
+set(INCLUDE Chemical_Data Quaternion Vector3D xyz2lwo)
 include_directories(${INCLUDE})
 
 set(SRC 
