@@ -1,0 +1,8 @@
+Build Instructions
+================================
+
+1. Install CMake
+2. Set up build environment using CMake:
+	cmake ..
+3. Then builds can be performed via make:
+	make
