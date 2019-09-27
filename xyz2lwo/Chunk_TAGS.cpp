@@ -1,5 +1,6 @@
 #include "Chunk_TAGS.h"
 #include <algorithm>
+#include <cstring>
 #include <limits.h>
 
 Chunk_TAGS::~Chunk_TAGS(){}
@@ -13,6 +14,7 @@ void Chunk_TAGS::write(std::ofstream &outFile) {
 	
 	IFF::uBYTE *buffer = (IFF::uBYTE *) calloc(chunk_buffer_size(), sizeof(IFF::uBYTE));
 	IFF::uLONG *longBuffer = (IFF::uLONG *) buffer;
+	
 	longBuffer[0] = ck_ID;
 	longBuffer[1] = chunk_data_size_BigE();
 
