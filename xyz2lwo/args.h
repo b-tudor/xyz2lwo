@@ -2,6 +2,7 @@
 #ifndef ARGS_H
 #define	ARGS_H
 
+#include <cstring>
 #include <iostream>
 #include <sstream>
 using namespace std;
