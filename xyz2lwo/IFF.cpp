@@ -2,6 +2,7 @@
 #include "Chunk.h"
 
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <fstream>
 
