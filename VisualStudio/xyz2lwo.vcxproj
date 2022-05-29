@@ -28,26 +28,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -138,28 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Chemical_Data\Chemical_Data.h" />
-    <ClInclude Include="..\Quaternion\Quaternion.h" />
-    <ClInclude Include="..\Vector3D\Vector3D.h" />
-    <ClInclude Include="..\xyz2lwo\args.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_BBOX.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_FORM_LWO2.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_LAYR.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_PNTS.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_POLS.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_PTAG.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_SURF.h" />
-    <ClInclude Include="..\xyz2lwo\Chunk_TAGS.h" />
-    <ClInclude Include="..\xyz2lwo\IFF.h" />
-    <ClInclude Include="..\xyz2lwo\LWOB_Builder.h" />
-    <ClInclude Include="..\xyz2lwo\Sphere.h" />
-    <ClInclude Include="..\xyz2lwo\Tube.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Chemical_Data\Chemical_Data.cpp" />
-    <ClCompile Include="..\Quaternion\Quaternion.cpp" />
-    <ClCompile Include="..\Vector3D\Vector3D.cpp" />
+    <ClCompile Include="..\xyz2lwo\Chemical_Data.cpp" />
     <ClCompile Include="..\xyz2lwo\Chunk.cpp" />
     <ClCompile Include="..\xyz2lwo\Chunk_BBOX.cpp" />
     <ClCompile Include="..\xyz2lwo\Chunk_FORM_LWO2.cpp" />
@@ -172,8 +151,29 @@
     <ClCompile Include="..\xyz2lwo\IFF.cpp" />
     <ClCompile Include="..\xyz2lwo\LWOB_Builder.cpp" />
     <ClCompile Include="..\xyz2lwo\main.cpp" />
+    <ClCompile Include="..\xyz2lwo\Quaternion.cpp" />
     <ClCompile Include="..\xyz2lwo\Sphere.cpp" />
     <ClCompile Include="..\xyz2lwo\Tube.cpp" />
+    <ClCompile Include="..\xyz2lwo\Vector3D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\xyz2lwo\args.h" />
+    <ClInclude Include="..\xyz2lwo\Chemical_Data.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_BBOX.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_FORM_LWO2.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_LAYR.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_PNTS.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_POLS.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_PTAG.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_SURF.h" />
+    <ClInclude Include="..\xyz2lwo\Chunk_TAGS.h" />
+    <ClInclude Include="..\xyz2lwo\IFF.h" />
+    <ClInclude Include="..\xyz2lwo\LWOB_Builder.h" />
+    <ClInclude Include="..\xyz2lwo\Quaternion.h" />
+    <ClInclude Include="..\xyz2lwo\Sphere.h" />
+    <ClInclude Include="..\xyz2lwo\Tube.h" />
+    <ClInclude Include="..\xyz2lwo\Vector3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

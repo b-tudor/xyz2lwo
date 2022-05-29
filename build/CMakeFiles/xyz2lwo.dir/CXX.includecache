@@ -1,0 +1,322 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../Chemical_Data/Chemical_Data.h
+string
+-
+
+../Quaternion/Quaternion.h
+Vector3D.h
+../Quaternion/Vector3D.h
+
+../Vector3D/Vector3D.h
+string
+-
+cmath
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Chemical_Data/Chemical_Data.cpp
+Chemical_Data.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Chemical_Data/Chemical_Data.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Chemical_Data/Chemical_Data.h
+string
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Quaternion/Quaternion.cpp
+Quaternion.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Quaternion/Quaternion.h
+cmath
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Quaternion/Quaternion.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Quaternion/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Vector3D/Vector3D.cpp
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Vector3D/Vector3D.h
+iomanip
+-
+sstream
+-
+Rando.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Vector3D/Rando.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/Vector3D/Vector3D.h
+string
+-
+cmath
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.cpp
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+fstream
+-
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_BBOX.cpp
+Chunk_BBOX.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_BBOX.h
+algorithm
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_BBOX.h
+fstream
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_FORM_LWO2.cpp
+algorithm
+-
+Chunk_FORM_LWO2.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_FORM_LWO2.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_FORM_LWO2.h
+fstream
+-
+vector
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_LAYR.cpp
+Chunk_LAYR.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_LAYR.h
+algorithm
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_LAYR.h
+fstream
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PNTS.cpp
+Chunk_PNTS.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PNTS.h
+algorithm
+-
+limits.h
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PNTS.h
+fstream
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_POLS.cpp
+Chunk_POLS.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_POLS.h
+algorithm
+-
+limits.h
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_POLS.h
+fstream
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PTAG.cpp
+Chunk_PTAG.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PTAG.h
+algorithm
+-
+limits.h
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PTAG.h
+fstream
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_SURF.cpp
+Chunk_SURF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_SURF.h
+algorithm
+-
+limits.h
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_SURF.h
+cstring
+-
+fstream
+-
+string
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_TAGS.cpp
+Chunk_TAGS.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_TAGS.h
+algorithm
+-
+cstring
+-
+limits.h
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_TAGS.h
+fstream
+-
+string
+-
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.cpp
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Chunk.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk.h
+algorithm
+-
+cstring
+-
+iostream
+-
+fstream
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+string
+-
+vector
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/LWOB_Builder.cpp
+LWOB_Builder.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/LWOB_Builder.h
+Sphere.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Sphere.h
+algorithm
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/LWOB_Builder.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+Chunk_BBOX.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_BBOX.h
+Chunk_FORM_LWO2.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_FORM_LWO2.h
+Chunk_LAYR.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_LAYR.h
+Chunk_PNTS.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PNTS.h
+Chunk_POLS.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_POLS.h
+Chunk_PTAG.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_PTAG.h
+Chunk_SURF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_SURF.h
+Chunk_TAGS.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_TAGS.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+vector
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Sphere.cpp
+Sphere.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Sphere.h
+algorithm
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Sphere.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Tube.cpp
+Tube.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Tube.h
+Quaternion.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Quaternion.h
+math.h
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Tube.h
+Vector3D.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Vector3D.h
+IFF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/IFF.h
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/args.h
+cstring
+-
+iostream
+-
+sstream
+-
+
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/main.cpp
+args.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/args.h
+LWOB_Builder.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/LWOB_Builder.h
+Chemical_Data.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chemical_Data.h
+Chunk_SURF.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Chunk_SURF.h
+Sphere.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Sphere.h
+Tube.h
+/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/xyz2lwo/Tube.h
+algorithm
+-
+iostream
+-
+fstream
+-
+sstream
+-
+

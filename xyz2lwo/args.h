@@ -9,12 +9,10 @@ using namespace std;
 
 
 typedef struct _parameters{
-        double	temperature;             
-        double  k;
-        int	    totalSteps;
-        int     equilibrationSteps;
-        int     P;
-        
+    std::string inputFile;
+    std::string outputFile;
+    bool draw_bonds = false;
+    int tessellation_depth = 3;
 } params;
  
 
@@ -44,87 +42,89 @@ char * stripPath( char * full_path ) {
     
     
 
-void displayUsageAndDie( char* progname, params *p ) {
+void displayUsageAndDie( char* progname, params& p ) {
     
     char *progName_wo_path = stripPath( progname );
-    cout << "Usage:" << endl;
-    cout << "\t" << progName_wo_path << " <Kelvin_Temperature> [options]" << endl;
-    cout << "Options:" << endl;
-    cout << "\t-e  EQUIL_STEPS  Number of MC steps to take before system is considered equilibrated." << endl;
-    cout << "\t                 (Default is " << p->equilibrationSteps << ")" << endl;
-    cout << "\t-k  SPRING_CONST Spring constant value for external (Harmonic) potential. (Default" << endl;
-    cout << "\t                 is " << p->k << ")" << endl;
-    cout << "\t-p  BEADS        Number of beads used to simulate each atom with quantum effects." << endl;
-    cout << "\t                 (Default is " << p->P << ")" << endl;
-    cout << "\t-t  TOTALSTEPS   Total number of simulation steps to perform. (Default is " << p->totalSteps << ")" << endl;
 
-
-	exit(0);
+    cout << "Usage:\n";
+    cout << "\t" << progName_wo_path << " <input file> [options]\n";
+    cout << "Options:\n";
+    cout << "\t-b               Use this option to draw bonds.\n";
+    cout << "\t-o  FILENAME     Output file name.\n";
+    cout << "\t-t  DEPTH        Levels of tesselation to use in sphere geometry." << std::endl;
+    
+    exit(0);
 }
 
 
 
-void processArgs( int argc, char * argv[], params *p)
+void processArgs( int argc, char * argv[], params& p )
 {
-    using namespace std;
+
+    bool  input_name_already_set = false;
+    bool output_name_already_set = false;
     
-	
 	if( argc >= 2 ) {
-        // TEMPERATURE
-        istringstream issArg1( argv[1] );
-        issArg1 >> p->temperature;
-        if(!issArg1) displayUsageAndDie(argv[0], p );
-                
-        int n=2;
+
+        int n=1;
         while( n<argc ) {
             
-            // NATOM 
-            istringstream issOptionToken( argv[n] );
+            istringstream issArg( argv[n] );
             
-            // Number of beads in ring polymer quantum particle approximation 
-            if( !strncmp( issOptionToken.str().c_str(), "-e", 5 )) {
-                
+            // Is user requesting that bonds be drawn? 
+            if( !strncmp( issArg.str().c_str(), "-b", 3 )) {
                 n++;
-                if( n>=argc ) displayUsageAndDie( argv[0], p );
-                istringstream issValueToken( argv[n] );
-				issValueToken >> p->equilibrationSteps;
-                if(!issValueToken) displayUsageAndDie(argv[0], p);
-				if( p->equilibrationSteps < 0 ) {
-                    cout << "Number of equilibration steps must be non-negative." << endl;
-                    cout << "Exiting..." << endl;
-                    exit(0);
-                }
-                n++;
+                p.draw_bonds = true;
             }
 
             
-            // SIGMA VALUE
-            else if( !strncmp( issOptionToken.str().c_str(), "-k", 5 )) {
-                
-                n++;
-                if( n>=argc ) displayUsageAndDie( argv[0], p );
-                istringstream issValueToken( argv[n] );
-                issValueToken >> p->k;
-                if(!issValueToken) displayUsageAndDie(argv[0], p);
-                n++;
+            // USER SPECIFIED OUTPUT FILE?
+            else if( !strncmp( issArg.str().c_str(), "-o", 3 )) {
+                if (output_name_already_set) {
+                    std::cout << "ERROR: Output file name already set.\n";
+                    displayUsageAndDie(argv[0], p);
+                } else {
+                    output_name_already_set = true;
+                    n++;
+                    if (n >= argc) {
+                        std::cout << "ERROR: Output file option indicated, but filename not provided.\n";
+                        displayUsageAndDie(argv[0], p);
+                    }
+                    istringstream issOptionValue(argv[n]);
+                    issOptionValue >> p.outputFile;
+                    if (!issOptionValue) {
+                        std::cout << "ERROR: Unable to parse output filename.\n";
+                        displayUsageAndDie(argv[0], p);
+                    }
+                    n++;
+                }
             }
             
-            // Number of beads in ring polymer quantum particle approximation 
-            else if( !strncmp( issOptionToken.str().c_str(), "-p", 5 )) {
+            
+            // USER SPECIFIED TESSELATION DEPTH?
+            else if( !strncmp( issArg.str().c_str(), "-t", 3 )) {
                 
                 n++;
-                if( n>=argc ) displayUsageAndDie( argv[0], p );
+                if (n >= argc) {
+                    std::cout << "ERROR: Tesselation option indicated, but value not provided.\n";
+                    displayUsageAndDie(argv[0], p);
+                }
                 istringstream issValueToken( argv[n] );
-				issValueToken >> p->P;
-                if(!issValueToken) displayUsageAndDie(argv[0], p);
-				if( p->P <= 0 ) {
-                    cout << "There must be at least 1 bead for each quantum-effect particle." << endl;
-                    cout << "Exiting..." << endl;
+				issValueToken >> p.tessellation_depth;
+                if (!issValueToken) {
+                    std::cout << "ERROR: Unable to parse tesselation depth value.\n";
+                    displayUsageAndDie(argv[0], p);
+                }
+				if( p.tessellation_depth <= 0  || p.tessellation_depth >6 ) {
+                    std::cout << "ERROR: Tesselation depth must be between 1 and 6, inclusive.\n";
+                    std::cout << "Exiting..." << endl;
                     exit(0);
                 }
                 n++;
             }
-                        
+            
+
+            /*
             // TOTAL STEPS
             else if( !strncmp( issOptionToken.str().c_str(), "-t", 5 )) {
                 
@@ -140,18 +140,50 @@ void processArgs( int argc, char * argv[], params *p)
                 }
                 n++;
             }
+            */
+            else {
+                
+                if( input_name_already_set) 
+                    std::cout << "ERROR: Unrecognized option: " << argv[n] << std::endl;
+                else {
+                    issArg >> p.inputFile;
+                    if (!issArg) displayUsageAndDie(argv[0], p);
+                    input_name_already_set = true;
+                }
 
-            else 
-            {
-                cout << "Skipping unrecognized option: " << argv[n] << endl;
                 n++;
             }
             
         } // end while
         
-        
 	} // end if
 	else displayUsageAndDie( argv[0], p );
+
+    
+
+
+    if (!input_name_already_set) {
+        std::cout << "ERROR: Input file was not specified.\n";
+        displayUsageAndDie(argv[0], p);
+    }
+
+    if ( !output_name_already_set ) {
+        char outFile[1000];
+        strcpy( outFile, p.inputFile.c_str() );
+        int len = strlen(outFile);
+        if( len >= 5 ) {
+            int extension_idx = len - 4;
+            if( ! strncmp(&outFile[extension_idx], ".xyz", 4)) {
+                strcpy(&outFile[extension_idx], ".lwo");
+                output_name_already_set = true;
+            }
+        }
+
+        if (!output_name_already_set)
+            strcpy(outFile, "xyz.lwo");
+
+        p.outputFile = outFile;
+    }
 }
 
 #endif	/* ARGS_H */

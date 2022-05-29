@@ -8,6 +8,10 @@ Sphere::Sphere( Vector3D r, double radius, int depth ) {
 	
 	depth = (depth >= maxDepth) ? maxDepth : depth;
 
+	// Start with a trigonal bipyramid where each point is 1 unit from the origin,
+	// and recursively tesselate each face, depth times to create our sphere. If
+	// we tesselate to depth 1, the result is the starting geometry below: a triangular
+	// bipyramid (a little diamond shape with six faces). 
 	Vector3D A( 0,   1,  0           );
 	Vector3D B( 1,   0,  0           );
 	Vector3D C(-0.5, 0, -0.866025404 );
@@ -20,18 +24,21 @@ Sphere::Sphere( Vector3D r, double radius, int depth ) {
 	int idx_D = addPoint(D);
 	int idx_E = addPoint(E);
 
+	// Tessellate the top pyramid
 	tessellate( depth, idx_A, idx_B, idx_C );
 	tessellate( depth, idx_A, idx_C, idx_D );
 	tessellate( depth, idx_A, idx_D, idx_B );
 
+	// Tessellate the bottom pyramid
 	tessellate( depth, idx_C, idx_B, idx_E );
 	tessellate( depth, idx_D, idx_C, idx_E );
 	tessellate( depth, idx_B, idx_D, idx_E );
 
-	std::for_each(points.begin(), points.end(), [r,radius](Vector3D &pos) {
+
+	for (auto& pos : points) {
 		pos *= radius;
 		pos += r;
-	});
+	}
 }
 
 

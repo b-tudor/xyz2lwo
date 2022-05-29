@@ -37,9 +37,9 @@ void LWOB_Builder::add_points( std::vector<Vector3D> points ) {
 	new_pnt_chunk = true;
 	lw_object.add_chunk( * ckPoints );
 	
-	std::for_each( points.begin(), points.end(), [ckPoints]( Vector3D r ) {
+	for (auto r : points) {
 		ckPoints->add_point(r);
-	});
+	}
 
 	ckBounds->set_HI( ckPoints->get_HI() );
 	ckBounds->set_LO( ckPoints->get_LO() );

@@ -15,37 +15,60 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\xyz2lwo\Chunk_TAGS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\IFF.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\Chunk_PTAG.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\Chunk_PNTS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\Chunk_POLS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\Tube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="..\xyz2lwo\Chunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_BBOX.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_FORM_LWO2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_LAYR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_PNTS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_POLS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_PTAG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_SURF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chunk_TAGS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\IFF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\LWOB_Builder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Tube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Chemical_Data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Quaternion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Vector3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="..\xyz2lwo\args.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\Chunk_SURF.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\LWOB_Builder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\Chunk_LAYR.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\xyz2lwo\Chunk_FORM_LWO2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\xyz2lwo\Chunk.h">
@@ -54,70 +77,47 @@
     <ClInclude Include="..\xyz2lwo\Chunk_BBOX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Chunk_FORM_LWO2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Chunk_LAYR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Chunk_PNTS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Chunk_POLS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Chunk_PTAG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Chunk_SURF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Chunk_TAGS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\IFF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\LWOB_Builder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\xyz2lwo\Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Chemical_Data\Chemical_Data.h">
+    <ClInclude Include="..\xyz2lwo\Tube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Quaternion\Quaternion.h">
+    <ClInclude Include="..\xyz2lwo\Chemical_Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Vector3D\Vector3D.h">
+    <ClInclude Include="..\xyz2lwo\Quaternion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Vector3D\Vector3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Quaternion\Quaternion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Chemical_Data\Chemical_Data.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\IFF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_SURF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\LWOB_Builder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_TAGS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_FORM_LWO2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_POLS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Tube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_PTAG.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_LAYR.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_BBOX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk_PNTS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\xyz2lwo\Chunk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="..\xyz2lwo\Vector3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
