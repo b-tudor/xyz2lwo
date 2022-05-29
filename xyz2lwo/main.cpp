@@ -24,9 +24,10 @@ typedef struct _xyzAtom {
 
 
 
-const int bond_side_count = 10;
-bool is_bond(int i, int j, double dist2);
+const int bond_side_count = 10;  // Number of sides in tube objects that form ball-and-stick bonds
 
+bool is_bond(int i, int j, double dist2); // determines if two atoms are bonded, based on their distance
+                                          // and the covalent radii of each atom.
 
 
 int main( int argc, char * argv[] )
@@ -76,6 +77,10 @@ int main( int argc, char * argv[] )
 			a.radius = 0.25;
 		}
 		Sphere s(r, a.radius, depth);
+
+		if (in.obj_file) {
+			//obj.add_group(s.points, s.faces, a.atomic_symbol);
+		}
 		lwob.add_points(s.points);
 		lwob.add_faces(s.faces, a.atomic_symbol);
 	}

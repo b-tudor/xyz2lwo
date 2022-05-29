@@ -11,8 +11,9 @@ using namespace std;
 typedef struct _parameters{
     std::string inputFile;
     std::string outputFile;
-    bool draw_bonds = false;
-    int tessellation_depth = 3;
+    bool draw_bonds = false;      // Draw ball-and-stick type bonds between atoms?
+    int tessellation_depth = 3;   // Depth by which to tesselate spheres representing atoms
+    bool obj_file = false;        // Does user want an object file instead of a .lwo?
 } params;
  
 
@@ -39,7 +40,30 @@ char * stripPath( char * full_path ) {
 
     return simple_name;
 }
+
+
+
+bool filename_ends_w_OBJ(std::string fname) {
     
+    const char *filename = fname.c_str();
+    
+    int  startIdx = fname.length() - 4;
+    if (startIdx <= 0)
+        return false;
+
+    const char CAPS_MASK = (char) 32;
+
+    char dot  = filename[startIdx + 0];
+    char ext1 = filename[startIdx + 1] | CAPS_MASK;
+    char ext2 = filename[startIdx + 2] | CAPS_MASK;
+    char ext3 = filename[startIdx + 3] | CAPS_MASK; 
+
+    if(  dot=='.' && ext1=='o' && ext2=='b' && ext3=='j'  ) 
+        return true;
+
+    return false;
+
+}
     
 
 void displayUsageAndDie( char* progname, params& p ) {
@@ -49,6 +73,7 @@ void displayUsageAndDie( char* progname, params& p ) {
     cout << "Usage:\n";
     cout << "\t" << progName_wo_path << " <input file> [options]\n";
     cout << "Options:\n";
+    cout << "\t-obj             Use this option to output an .obj file (rather than a .lwo).\n";
     cout << "\t-b               Use this option to draw bonds.\n";
     cout << "\t-o  FILENAME     Output file name.\n";
     cout << "\t-t  DEPTH        Levels of tesselation to use in sphere geometry." << std::endl;
@@ -77,7 +102,6 @@ void processArgs( int argc, char * argv[], params& p )
                 p.draw_bonds = true;
             }
 
-            
             // USER SPECIFIED OUTPUT FILE?
             else if( !strncmp( issArg.str().c_str(), "-o", 3 )) {
                 if (output_name_already_set) {
@@ -96,6 +120,8 @@ void processArgs( int argc, char * argv[], params& p )
                         std::cout << "ERROR: Unable to parse output filename.\n";
                         displayUsageAndDie(argv[0], p);
                     }
+                    if (filename_ends_w_OBJ(p.outputFile))
+                        p.obj_file = true;
                     n++;
                 }
             }
