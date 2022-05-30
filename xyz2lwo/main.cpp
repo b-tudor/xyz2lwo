@@ -1,7 +1,8 @@
 #include "args.h"
-#include "LWOB_Builder.h"
 #include "Chemical_Data.h"  // https://github.com/b-tudor/Chemical_Data
 #include "Chunk_SURF.h"
+#include "LWOB_Builder.h"
+#include "OBJ.h"
 #include "Sphere.h"
 #include "Tube.h"
 
@@ -22,25 +23,33 @@ typedef struct _xyzAtom {
 	double radius = 0;
 } xyzAtom;
 
+const int bond_side_count = 10;           // Number of sides in tube objects that form ball-and-stick bonds
 
-
-const int bond_side_count = 10;  // Number of sides in tube objects that form ball-and-stick bonds
-
-bool is_bond(int i, int j, double dist2); // determines if two atoms are bonded, based on their distance
+bool is_bond(int i, int j, double dist2); // Determines if two atoms are bonded, based on their distance
                                           // and the covalent radii of each atom.
 
 
 int main( int argc, char * argv[] )
 {
+	// Get filename and user settings from the command line
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	params in;
-	processArgs(argc, argv, in);
+	processArgs(argc, argv, in); 
+	// xfer param data to local variables for ease of reference:
+	const bool bonds       = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
+	const bool tessDepth   = in.tessellation_depth; // Recursive levels of triangular sphere approximation
+	const bool output_type = in.output_file_type;   // Type of output file to generate
+	
 
+
+
+	// Read the atomic coordinates from the input file
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	std::ifstream infile(in.inputFile);
 	if (!infile) {
 		std::cout << "Could not open file: " << in.inputFile << "\nExiting...\n";
 		return 0;
 	}
-
 
 	int atom_count = 0;
 	std::vector<xyzAtom> atom_list;
@@ -59,7 +68,13 @@ int main( int argc, char * argv[] )
 	}
 	
 
+
+
+	// Generate the geometry from the atomic coordinates
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	LWOB_Builder lwob;
+	OBJ          obj;
 	int count = 0;
 	// Add the atoms to the file
 	
@@ -78,11 +93,23 @@ int main( int argc, char * argv[] )
 		}
 		Sphere s(r, a.radius, depth);
 
-		if (in.obj_file) {
-			//obj.add_group(s.points, s.faces, a.atomic_symbol);
+
+		switch(output_type) {
+			
+			case OBJ_FILE:
+				{
+					OBJ_group og;
+					og.add_points(s.points);
+					og.add_faces(s.faces, a.atomic_symbol);
+					obj.add_group(og); 
+				}
+				break;
+
+			case LWO_FILE:
+			default:
+				lwob.add_points(s.points);
+				lwob.add_faces(s.faces, a.atomic_symbol);
 		}
-		lwob.add_points(s.points);
-		lwob.add_faces(s.faces, a.atomic_symbol);
 	}
 
 	std::cout << "\rProcessing atoms: done.   \n";

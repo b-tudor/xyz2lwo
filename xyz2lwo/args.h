@@ -5,15 +5,16 @@
 #include <cstring>
 #include <iostream>
 #include <sstream>
-using namespace std;
 
+const char LWO_FILE = (char) 0;
+const char OBJ_FILE = (char) 1;
 
 typedef struct _parameters{
     std::string inputFile;
     std::string outputFile;
-    bool draw_bonds = false;      // Draw ball-and-stick type bonds between atoms?
-    int tessellation_depth = 3;   // Depth by which to tesselate spheres representing atoms
-    bool obj_file = false;        // Does user want an object file instead of a .lwo?
+    bool draw_bonds = false;           // Draw ball-and-stick type bonds between atoms?
+    int tessellation_depth = 3;        // Depth by which to tesselate spheres representing atoms
+    char output_file_type  = LWO_FILE; // Default output file type is LWO
 } params;
  
 
@@ -66,17 +67,22 @@ bool filename_ends_w_OBJ(std::string fname) {
 }
     
 
+
 void displayUsageAndDie( char* progname, params& p ) {
     
     char *progName_wo_path = stripPath( progname );
 
-    cout << "Usage:\n";
-    cout << "\t" << progName_wo_path << " <input file> [options]\n";
-    cout << "Options:\n";
-    cout << "\t-obj             Use this option to output an .obj file (rather than a .lwo).\n";
-    cout << "\t-b               Use this option to draw bonds.\n";
-    cout << "\t-o  FILENAME     Output file name.\n";
-    cout << "\t-t  DEPTH        Levels of tesselation to use in sphere geometry." << std::endl;
+    std::cout << "Usage:\n";
+    std::cout << "\t" << progName_wo_path << " <input file> [options]\n";
+    std::cout << "Options:\n";
+    std::cout << "\t-b               Use this option to draw bonds.\n";
+    std::cout << "\t-t  DEPTH        Levels of tesselation to use in approximating spherical geometry\n";
+    std::cout << "\t                 via polygons. A higher number will result in smoother spheres, but\n";
+    std::cout << "\t                 accordingly, each sphere will be comprised of an exponentially\n";
+    std::cout << "\t                 increasing number of triangles.\n";
+    std::cout << "\t-o  FILENAME     Output file name.\n";
+    std::cout << "\t                 NOTE: If FILENAME has an.obj extension, the output file produced will\n";
+    std::cout << "\t                 be a Wavefront OBJ file." << std::endl;
     
     exit(0);
 }
@@ -94,7 +100,7 @@ void processArgs( int argc, char * argv[], params& p )
         int n=1;
         while( n<argc ) {
             
-            istringstream issArg( argv[n] );
+            std::istringstream issArg( argv[n] );
             
             // Is user requesting that bonds be drawn? 
             if( !strncmp( issArg.str().c_str(), "-b", 3 )) {
@@ -114,14 +120,14 @@ void processArgs( int argc, char * argv[], params& p )
                         std::cout << "ERROR: Output file option indicated, but filename not provided.\n";
                         displayUsageAndDie(argv[0], p);
                     }
-                    istringstream issOptionValue(argv[n]);
+                    std::istringstream issOptionValue(argv[n]);
                     issOptionValue >> p.outputFile;
                     if (!issOptionValue) {
                         std::cout << "ERROR: Unable to parse output filename.\n";
                         displayUsageAndDie(argv[0], p);
                     }
                     if (filename_ends_w_OBJ(p.outputFile))
-                        p.obj_file = true;
+                        p.output_file_type = OBJ_FILE;
                     n++;
                 }
             }
@@ -135,7 +141,7 @@ void processArgs( int argc, char * argv[], params& p )
                     std::cout << "ERROR: Tesselation option indicated, but value not provided.\n";
                     displayUsageAndDie(argv[0], p);
                 }
-                istringstream issValueToken( argv[n] );
+                std::istringstream issValueToken( argv[n] );
 				issValueToken >> p.tessellation_depth;
                 if (!issValueToken) {
                     std::cout << "ERROR: Unable to parse tesselation depth value.\n";
@@ -143,7 +149,7 @@ void processArgs( int argc, char * argv[], params& p )
                 }
 				if( p.tessellation_depth <= 0  || p.tessellation_depth >6 ) {
                     std::cout << "ERROR: Tesselation depth must be between 1 and 6, inclusive.\n";
-                    std::cout << "Exiting..." << endl;
+                    std::cout << "Exiting..." << std::endl;
                     exit(0);
                 }
                 n++;

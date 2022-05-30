@@ -151,6 +151,8 @@
     <ClCompile Include="..\xyz2lwo\IFF.cpp" />
     <ClCompile Include="..\xyz2lwo\LWOB_Builder.cpp" />
     <ClCompile Include="..\xyz2lwo\main.cpp" />
+    <ClCompile Include="..\xyz2lwo\OBJ.cpp" />
+    <ClCompile Include="..\xyz2lwo\OBJ_group.cpp" />
     <ClCompile Include="..\xyz2lwo\Quaternion.cpp" />
     <ClCompile Include="..\xyz2lwo\Sphere.cpp" />
     <ClCompile Include="..\xyz2lwo\Tube.cpp" />
@@ -170,6 +172,8 @@
     <ClInclude Include="..\xyz2lwo\Chunk_TAGS.h" />
     <ClInclude Include="..\xyz2lwo\IFF.h" />
     <ClInclude Include="..\xyz2lwo\LWOB_Builder.h" />
+    <ClInclude Include="..\xyz2lwo\OBJ.h" />
+    <ClInclude Include="..\xyz2lwo\OBJ_group.h" />
     <ClInclude Include="..\xyz2lwo\Quaternion.h" />
     <ClInclude Include="..\xyz2lwo\Sphere.h" />
     <ClInclude Include="..\xyz2lwo\Tube.h" />
