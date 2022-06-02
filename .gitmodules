@@ -1,9 +1,0 @@
-[submodule "Chemical_Data"]
-	path = Chemical_Data
-	url = https://github.com/b-tudor/Chemical_Data.git
-[submodule "Vector3D"]
-	path = Vector3D
-	url = https://github.com/b-tudor/Vector3D.git
-[submodule "Quaternion"]
-	path = Quaternion
-	url = https://github.com/b-tudor/Quaternion.git
