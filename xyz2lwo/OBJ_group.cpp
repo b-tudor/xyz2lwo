@@ -1,28 +1,44 @@
+#include "IFF.h"
 #include "OBJ_group.h"
 
-#include "IFF.h"
+OBJ_group::OBJ_group() {
+	Name = "Default";
+	Material = "Default";
+}
 
-
-void OBJ_group::add_points( std::vector<Vector3D> points ) {
+void OBJ_group::add_points( std::vector<Vector3D> &points ) {
 
 	// transfer the passed-in points into the .OBJ's data
 	for( auto p:points )
-		vertices.push_back(p);
+		Vertices.push_back(p);
 }
 
 
 
-void OBJ_group::add_faces(std::vector<IFF::Face> faces) {
 
-	add_faces(faces, "Default");
+// Transfer the passed-in points into the .OBJ's data. Each polygon references the
+// points in "vertices" by number, where the numbering of the vertices starts at 1
 
+
+
+
+
+
+
+
+
+
+
+
+void OBJ_group::add_faces(std::vector<IFF::Face>& FacesToAdd) {
+	add_faces(FacesToAdd, "Default");
 }
-void OBJ_group::add_faces(std::vector<IFF::Face> polygons, std::string surfaceID) {
-
-	// Transfer the passed-in points into the .OBJ's data. Each polygon references the
-	// points in "vertices" by number, where the numbering of the vertices starts at 1
-	set_material(surfaceID);
-	for (auto p : polygons)
-		faces.push_back(p);
-	
+void OBJ_group::add_faces(std::vector<IFF::Face>& FacesToAdd, std::string objectName) {
+	add_faces(FacesToAdd, objectName, objectName);
+}
+void OBJ_group::add_faces(std::vector<IFF::Face>& FacesToAdd, std::string objectName, std::string materialName) {
+	set_name(objectName);
+	set_material(materialName);
+	for (auto f : FacesToAdd)
+		Faces.push_back(f);
 }

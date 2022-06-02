@@ -6,25 +6,35 @@
 
 class OBJ_group {
 
+	
+
 	// Data
 	private:
 		std::string Name;
 		std::string Material;
-		std::vector<Vector3D> vertices;
-		std::vector<IFF::Face> faces;
+		std::vector<Vector3D> Vertices;
+		std::vector<IFF::Face> Faces;
 
 	// Methods
 
 	public:
+
+		// Initializer
+		OBJ_group();
+
 		// Getters
 		std::string name    () { return Name; }
 		std::string material() { return Material; }
+		std::vector<Vector3D> &points  () { return Vertices; }
+		std::vector<IFF::Face>& faces  () { return Faces;    }
+		
 		// Setters
 		void set_name    (std::string n) {     Name = n; }
 		void set_material(std::string m) { Material = m; };
 		
 		// Add Geometry
-		void add_points( std::vector<Vector3D> p );
-		void add_faces ( std::vector<IFF::Face>     f );
-		void add_faces ( std::vector<IFF::Face> f, std::string surfaceID );
+		void add_points( std::vector<Vector3D>  &p );
+		void add_faces ( std::vector<IFF::Face> &polygons );
+		void add_faces ( std::vector<IFF::Face> &polygons, std::string objectName );
+		void add_faces ( std::vector<IFF::Face> &polygons, std::string objectName, std::string materialName );
 };

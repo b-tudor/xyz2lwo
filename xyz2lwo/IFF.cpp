@@ -6,7 +6,6 @@
 #include <iostream>
 #include <fstream>
 
-using std::ios;
 
 //  CONSTRUCTORS / DESTRUCTORS  ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -155,7 +154,7 @@ void IFF::write(std::string filename) {
 		return; // Nothing to write
 
 	// open the file
-	std::ofstream outFile(filename, ios::binary | ios::out);
+	std::ofstream outFile(filename, std::ios::binary | std::ios::out);
 
 	// write the data sections
 	for_each(chunks.begin(), chunks.end(), [&outFile](Chunk * ck) {

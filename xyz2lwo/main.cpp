@@ -35,10 +35,11 @@ int main( int argc, char * argv[] )
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	params in;
 	processArgs(argc, argv, in); 
-	// xfer param data to local variables for ease of reference:
-	const bool bonds       = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
-	const bool tessDepth   = in.tessellation_depth; // Recursive levels of triangular sphere approximation
-	const bool output_type = in.output_file_type;   // Type of output file to generate
+	// Create aliases for param data for ease of reference:
+	const bool& bonds          = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
+	const bool& tessDepth      = in.tessellation_depth; // Recursive levels of triangular sphere approximation
+	const bool& output_type    = in.output_file_type;   // Type of output file to generate
+	const std::string& outFile = in.outputFile;         // output file name
 	
 
 
@@ -92,8 +93,8 @@ int main( int argc, char * argv[] )
 			a.radius = 0.25;
 		}
 		Sphere s(r, a.radius, depth);
-
-
+		
+		// Store points based on the desired output type
 		switch(output_type) {
 			
 			case OBJ_FILE:
@@ -130,8 +131,25 @@ int main( int argc, char * argv[] )
 					Vector3D I(atom_list[i].x, atom_list[i].y, atom_list[i].z);
 					Vector3D J(atom_list[j].x, atom_list[j].y, atom_list[j].z);
 					Tube bond(I, J, 0.08, bond_side_count);
-					lwob.add_points(bond.points);
-					lwob.add_faces(bond.faces, "bond");
+
+					// Store points based on the desired output type
+					switch (output_type) {
+
+						case OBJ_FILE:
+							{
+								OBJ_group og;
+								og.add_points(bond.points);
+								og.add_faces(bond.faces, "bond" );
+								obj.add_group(og);
+							}
+							break;
+
+						case LWO_FILE:
+							default:
+								lwob.add_points(bond.points);
+								lwob.add_faces(bond.faces, "bond");
+					}
+					
 				}
 			}
 		}
@@ -263,8 +281,15 @@ int main( int argc, char * argv[] )
 	lwob.add_faces(s2.faces, "Atom.O" );
 	*/
 
-
-	lwob.write(in.outputFile);
+	switch (output_type) {
+		case OBJ_FILE:
+			obj.write(in.outputFile);
+			break;
+		case LWO_FILE:
+		default:
+			lwob.write(in.outputFile);
+	}
+	
 	
 	return 0;
 }

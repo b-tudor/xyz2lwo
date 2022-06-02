@@ -75,12 +75,16 @@ public:
 	~Vector3D(void);
 
 	void set(double x, double y, double z);
-	void setX(double x) { X = x; }
-	void setY(double y) { Y = y; }
-	void setZ(double z) { Z = z; }
-	inline double x() const { return X; }
-	inline double y() const { return Y; }
-	inline double z() const { return Z; }
+	void setX(double x) { e[0] = x; }
+	void setY(double y) { e[1] = y; }
+	void setZ(double z) { e[2] = z; }
+	// fast element access w/o bounds checking
+	inline double operator[](int i) { return e[i]; }
+	// safer element access, w bounds checking 
+	inline double access(int i) { return ((i >= 0) && (i<3)) ? e[i] : NAN;}
+	inline double x() const { return e[0]; }
+	inline double y() const { return e[1]; }
+	inline double z() const { return e[2]; }
 
 	void normalize();
 
@@ -116,7 +120,7 @@ public:
 		return Vector3D(this->x() / rhs, this->y() / rhs, this->z() / rhs);
 	}
 	// -1 * vector
-	Vector3D operator-() const { return Vector3D(-X, -Y, -Z); }
+	Vector3D operator-() const { return Vector3D(-e[0], -e[1], -e[2]); }
 	// scalar * vector
 	friend Vector3D operator*(const double lhs, Vector3D rhs);
 
@@ -133,6 +137,8 @@ public:
 			this->x() * rhs.y() - this->y() * rhs.x()
 		);
 	}
+
+
 
 
 	// vector length
@@ -156,7 +162,7 @@ public:
 
 
 private:
-	double X, Y, Z;
+	double e[3];
 };
 
 #endif	// VECTOR3D_H

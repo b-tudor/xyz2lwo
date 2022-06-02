@@ -6,12 +6,12 @@
 #endif
 
 Vector3D::~Vector3D() { }
-Vector3D::Vector3D() :X(0), Y(0), Z(0) {}
+Vector3D::Vector3D() { e[0] = e[1] = e[2] = 0.0; }
 Vector3D::Vector3D(double x, double y, double z)
 {
-	X = x;
-	Y = y;
-	Z = z;
+	e[0] = x;
+	e[1] = y;
+	e[2] = z;
 }
 
 
@@ -19,29 +19,31 @@ Vector3D::Vector3D(double x, double y, double z)
 
 void Vector3D::set(double x, double y, double z)
 {
-	X = x;
-	Y = y;
-	Z = z;
+	e[0] = x;
+	e[1] = y;
+	e[2] = z;
 }
 
 
 void Vector3D::normalize() {
+
 	double mag = norm();
+	
 	if (mag != 0) {
-		X = X / mag;
-		Y = Y / mag;
-		Z = Z / mag;
+		e[0] = e[0] / mag;
+		e[1] = e[1] / mag;
+		e[2] = e[2] / mag;
 	}
 	else
-		X = Y = Z = 0;
+		e[0] = e[1] = e[2] = 0.0;
 }
 
 
 Vector3D& Vector3D::operator=(const Vector3D& rhs) {
 	if (this != &rhs) {
-		this->X = rhs.x();
-		this->Y = rhs.y();
-		this->Z = rhs.z();
+		this->e[0] = rhs.x();
+		this->e[1] = rhs.y();
+		this->e[2] = rhs.z();
 	}
 
 	return *this;
@@ -49,9 +51,9 @@ Vector3D& Vector3D::operator=(const Vector3D& rhs) {
 
 
 Vector3D& Vector3D::operator=(const double rhs) {
-	this->X = rhs;
-	this->Y = rhs;
-	this->Z = rhs;
+	this->e[0] = rhs;
+	this->e[1] = rhs;
+	this->e[2] = rhs;
 
 	return *this;
 }
@@ -67,9 +69,9 @@ bool Vector3D::equals(const Vector3D& rhs, double threshold) {
 
 // Addition
 Vector3D& Vector3D::operator+=(const Vector3D& rhs) {
-	this->X = this->X + rhs.x();
-	this->Y = this->Y + rhs.y();
-	this->Z = this->Z + rhs.z();
+	this->e[0] = this->e[0] + rhs.x();
+	this->e[1] = this->e[1] + rhs.y();
+	this->e[2] = this->e[2] + rhs.z();
 
 	return *this;
 }
@@ -77,9 +79,9 @@ Vector3D& Vector3D::operator+=(const Vector3D& rhs) {
 
 // Subtraction
 Vector3D& Vector3D::operator-=(const Vector3D& rhs) {
-	this->X = this->X - rhs.x();
-	this->Y = this->Y - rhs.y();
-	this->Z = this->Z - rhs.z();
+	this->e[0] = this->e[0] - rhs.x();
+	this->e[1] = this->e[1] - rhs.y();
+	this->e[2] = this->e[2] - rhs.z();
 
 	return *this;
 }
@@ -87,15 +89,15 @@ Vector3D& Vector3D::operator-=(const Vector3D& rhs) {
 
 // vector * scalar
 Vector3D& Vector3D::operator*=(const double scalar) {
-	this->X *= scalar;
-	this->Y *= scalar;
-	this->Z *= scalar;
+	this->e[0] *= scalar;
+	this->e[1] *= scalar;
+	this->e[2] *= scalar;
 	return (*this);
 }
 Vector3D& Vector3D::operator/=(const double scalar) {
-	this->X /= scalar;
-	this->Y /= scalar;
-	this->Z /= scalar;
+	this->e[0] /= scalar;
+	this->e[1] /= scalar;
+	this->e[2] /= scalar;
 	return (*this);
 }
 // scalar * vector  (non-member function)
@@ -106,10 +108,17 @@ Vector3D operator*(const double d, const Vector3D rhs) {
 
 // Squared Distance between i & j
 double Vector3D::distance2(const Vector3D i, const Vector3D j) {
+	
 	double A = i.x() - j.x();
+	A = A*A;
+
 	double B = i.y() - j.y();
+	B = B*B;
+
 	double C = i.z() - j.z();
-	return A * A + B * B + C * C;
+	C = C*C;
+
+	return A + B + C;
 }
 
 
@@ -119,9 +128,9 @@ std::string Vector3D::xyzOut(std::string symbol) {
 	stringstream out;
 	out << left << setw(5) << symbol << right;
 	out << fixed << setprecision(5);
-	out << setw(10) << X
-		<< setw(10) << Y
-		<< setw(10) << Z;
+	out << setw(10) << e[0]
+		<< setw(10) << e[1]
+		<< setw(10) << e[2];
 
 	return out.str();
 }
