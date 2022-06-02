@@ -1,93 +1,93 @@
 /*  Brant Tudor
  *  (c) 2019
  *  Vector Class to represent a three dimensional Cartesian coordinate vector
- *  along with common operations associated with these objects. 
+ *  along with common operations associated with these objects.
  */
 
 #pragma once
 #ifndef VECTOR_3D_H
 #define	VECTOR_3D_H
+#include <iostream>
 #include <string>
 #include <cmath>
-// The randomizer function will create a vector whose point lies on the surface of
-// a unit sphere. To use this function, uncomment the following line and include 
-// the Rando class found at: https://github.com/b-tudor/Rando
-// #define INCLUDE_RANDOMIZER
-/*
+ // The randomizer function will create a vector whose point lies on the surface of a unit
+ // sphere. To use this function, uncomment the following line and include the Rando RNG
+ // wrapper found at (or substitute your own, but to get an even distribution of points 
+ // across the surface of the unit sphere make sure the random numbers are selected from
+ // a normal distribution): https://github.com/b-tudor/Rando
+ // #define INCLUDE_RANDOMIZER
+ /*
+	 CONSTRUCTORS/DESTRUCTORS
+	 Vector3D();
+	 Vector3D(double x, double y, double z);
+	 ~Vector3D(void);
+	 GETTERS/SETTERS
+	 void set(double x, double y, double z);
+	 void setX(double x)
+	 void setY(double y)
+	 void setZ(double z)
+	 inline double x() const
+	 inline double y() const
+	 inline double z() const
+	 double & operator[]                                     fast, loop-friendly access to the vector components
+	 inline double R(const size_t i) const                   slower, bounds-checked read-only access
+	 OPERATORS SUPPORTED
 
-	CONSTRUCTORS/DESTRUCTORS
-
-	Vector3D();
-	Vector3D(double x, double y, double z);
-	~Vector3D(void);
-
-
-
-	GETTERS/SETTERS
-
-	void set(double x, double y, double z);
-	void setX(double x) { X = x; }
-	void setY(double y) { Y = y; }
-	void setZ(double z) { Z = z; }
-	inline double x() const { return X; }
-	inline double y() const { return Y; }
-	inline double z() const { return Z; }
-
-
-
-	OPERATORS SUPPORTED
-
-	Vector3D & operator=(const Vector3D &rhs);              vector vector assignment
-	Vector3D & operator=(const double rhs);                 assign all components of a vector the same scalar
-	bool operator==(const Vector3D &rhs);                   exact equality comparator
-	bool equals(const Vector3D &rhs, double threshold);     equality comparator with an accuracy threshold
-	Vector3D & operator+=(const Vector3D &rhs);             Addition
-	inline const Vector3D operator+(const Vector3D &rhs);
-	Vector3D & operator-=(const Vector3D &rhs) const;       Subtraction
-	const Vector3D operator-(const Vector3D &rhs) const
-	inline double operator*(const Vector3D &rhs) const      Dot product
-	inline Vector3D cross(const Vector3D &rhs) const        Cross product
-	inline Vector3D operator*(const double  rhs) const      Scalar x vector
-	inline Vector3D operator/(const double  rhs) const      Division by scalar
-
-
-	OTHER OPERATIONS
-
-	inline double norm ()                     length of vector
-	inline double norm2()                     norm() squared
-	double distance()                         distance between to (position) vectors
-	double distance2()                        distance() squared
-	void randomize()                          changes Vector into  a random unit vector, selected from a uniform
-												distribution across the surface of a unit sphere
-
-	OUTPUT
-	std::string xyzOut(std::string symbol)    returns a string suitable for inclusion in an xyz file
-
-*/
+	 ostream& operator<< (ostream& os, const Vector3D& v)    stream output
+	 Vector3D & operator=(const Vector3D &rhs);              vector vector assignment
+	 Vector3D & operator=(const double rhs);                 assign all components of a vector the same scalar
+	 bool operator==(const Vector3D &rhs);                   EXACT (floating point rep) equality comparator
+	 bool equals(const Vector3D &rhs, double threshold);     equality comparator that uses an accuracy threshold
+	 Vector3D & operator+=(const Vector3D &rhs);             Addition
+	 inline const Vector3D operator+(const Vector3D &rhs);
+	 Vector3D & operator-=(const Vector3D &rhs) const;       Subtraction
+	 const Vector3D operator-(const Vector3D &rhs) const
+	 inline double operator*(const Vector3D &rhs) const      Dot product
+	 inline Vector3D cross(const Vector3D &rhs) const        Cross product
+	 inline Vector3D operator*(const double rhs) const       Scalar * vector     (vector scaling)
+	 inline Vector3D operator/(const double rhs) const       Division by scalar  (vector scaling)
+	 OTHER OPERATIONS
+	 inline double norm ()                     length of vector
+	 inline double norm2()                     norm() squared
+	 double distance()                         distance between to (position) vectors
+	 double distance2()                        distance() squared
+	 void randomize()                          changes Vector into  a random unit vector, selected from a uniform
+												 distribution across the surface of a unit sphere
+	 OUTPUT
+	 std::string xyzOut(std::string symbol)    returns a string suitable for inclusion in an xyz file
+ */
 
 
 
 class Vector3D
 {
 public:
+
+	// Data
+	double r[3];
+
+	// Methods
+
 	Vector3D();
 	Vector3D(double x, double y, double z);
 	~Vector3D(void);
 
 	void set(double x, double y, double z);
-	void setX(double x) { e[0] = x; }
-	void setY(double y) { e[1] = y; }
-	void setZ(double z) { e[2] = z; }
-	// fast element access w/o bounds checking
-	inline double operator[](int i) { return e[i]; }
-	// safer element access, w bounds checking 
-	inline double access(int i) { return ((i >= 0) && (i<3)) ? e[i] : NAN;}
-	inline double x() const { return e[0]; }
-	inline double y() const { return e[1]; }
-	inline double z() const { return e[2]; }
+	void setX(double x) { r[0] = x; }
+	void setY(double y) { r[1] = y; }
+	void setZ(double z) { r[2] = z; }
+	inline double x() const { return r[0]; }
+	inline double y() const { return r[1]; }
+	inline double z() const { return r[2]; }
+	// Faster read/write access w no bounds-checking:
+	inline double& operator[](const size_t i) { return r[i]; }
+	// Safer, slower, bounds-checked READ-ONLY access (fouled numerical results MAY indicate out-of-bounds
+	// index condition, but out-of-bounds array access attempts will not seg fault [at least not here]):
+	inline double R(const size_t i) const { return (i >= 0 && i < 3) ? r[i] : NAN; }
+
+	friend std::ostream& operator<<(std::ostream& os, Vector3D& v);
 
 	void normalize();
-
 
 
 	Vector3D& operator=(const Vector3D& rhs);
@@ -120,7 +120,7 @@ public:
 		return Vector3D(this->x() / rhs, this->y() / rhs, this->z() / rhs);
 	}
 	// -1 * vector
-	Vector3D operator-() const { return Vector3D(-e[0], -e[1], -e[2]); }
+	Vector3D operator-() const { return Vector3D(-x(), -y(), -z()); }
 	// scalar * vector
 	friend Vector3D operator*(const double lhs, Vector3D rhs);
 
@@ -139,8 +139,6 @@ public:
 	}
 
 
-
-
 	// vector length
 	inline double norm() { return sqrt(norm2()); }
 	inline double norm2() { return ((*this) * (*this)); }
@@ -149,20 +147,20 @@ public:
 	// distance between vectors (or the positions they represent
 	static double distance2(const Vector3D r1, const Vector3D r2);
 	inline static double distance(const Vector3D r1, const Vector3D r2) { return sqrt(distance2(r1, r2)); }
-	
 
-	// generate a string suitable for inclusion in a .xyz formatted file, with given Chemical symbol 'symbol' (e.g. C, H, O, Ag, Fe, Cu)
+
+	// generate a string suitable for inclusion in an .xyz formatted file, with given Chemical symbol 'symbol' (e.g. C, H, O, Ag, Fe, Cu)
 	std::string xyzOut(std::string symbol);
 
 
-	#ifdef INCLUDE_RANDOMIZER
-		// convert to randomly oriented unit vector
-		void randomize();
-	#endif
+#ifdef INCLUDE_RANDOMIZER
+	// convert to randomly oriented unit vector
+	void randomize();
+#endif
 
 
-private:
-	double e[3];
+
+
 };
 
 #endif	// VECTOR3D_H
