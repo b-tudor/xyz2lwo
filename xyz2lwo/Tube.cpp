@@ -25,14 +25,14 @@ Tube::Tube( Vector3D rA, Vector3D rB, double radius, int sides ) {
 	
 	// create a quaternion that will rotate a point about the bond axis by the angle dictated by the side count
 	double angle = (2.0 * M_PI) / (double) sides;
-	Quaternion rotor(bond_vector, angle, Quaternion::RADIANS);
+	Quaternion rotor(bond_vector, angle, Quaternion::AngleMode::RADIANS);
 	
 	int idx_limit = 2 * sides;
 
 	for (int i = 0; i < sides; i++) {
 		
 		int two_i = 2 * i;
-		IFF::Face f;
+		Object3D::Face f;
 		f.vertex_count = 4;
 		f.vertex[0] = two_i;
 		f.vertex[1] = (two_i + 2) % idx_limit;
@@ -44,14 +44,6 @@ Tube::Tube( Vector3D rA, Vector3D rB, double radius, int sides ) {
 		points.push_back( rB + ortho_vector );
 		ortho_vector = rotor.rotate(ortho_vector);
 	}
-
-	
-	/*
-	std::for_each(points.begin(), points.end(), [r,radius](Vector3D &pos) {
-		pos *= radius;
-		pos += r;
-	});
-	*/
 }
 
 
@@ -86,7 +78,7 @@ int Tube::addPoint( Vector3D p )
 	}
 
 	if (idx != idx2)
-		throw - 1;
+		throw -1;
 	else
 		return idx;
 }

@@ -50,7 +50,7 @@ Sphere::~Sphere() { }
 void Sphere::tessellate(int depth, int idx_A, int idx_B, int idx_C) {
 	
 	if (depth <= 0) {
-		IFF::Face f;
+		Object3D::Face f;
 		f.vertex_count = 3;
 		f.vertex[0] = idx_A;
 		f.vertex[1] = idx_B;

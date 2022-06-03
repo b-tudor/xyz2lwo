@@ -48,7 +48,7 @@ bool filename_ends_w_OBJ(std::string fname) {
     
     const char *filename = fname.c_str();
     
-    int  startIdx = fname.length() - 4;
+    size_t  startIdx = fname.length() - 4;
     if (startIdx <= 0)
         return false;
 
@@ -202,9 +202,9 @@ void processArgs( int argc, char * argv[], params& p )
     if ( !output_name_already_set ) {
         char outFile[1000];
         strcpy( outFile, p.inputFile.c_str() );
-        int len = strlen(outFile);
+        size_t len = strlen(outFile);
         if( len >= 5 ) {
-            int extension_idx = len - 4;
+            size_t extension_idx = len - 4;
             if( ! strncmp(&outFile[extension_idx], ".xyz", 4)) {
                 strcpy(&outFile[extension_idx], ".lwo");
                 output_name_already_set = true;

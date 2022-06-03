@@ -8,10 +8,13 @@
 #include "Chunk_PTAG.h"
 #include "Chunk_SURF.h"
 #include "Chunk_TAGS.h"
+#include "Object3D.h"
 #include "Vector3D.h"
 
 #include <vector>
 
+// LWOB_Builder receives and organizes the collection of chunks to make an IFF Lightwave Object file (.lwo)
+// and outputs said chunks according to the IFF file specification.
 
 // Chunks should be added in this order:
 //	1) Chunk_TAGS
@@ -31,8 +34,6 @@
 //             polygon. The first number in each pair is a 0-based index into the most recent POLS chunk, and the second is
 //             a 0-based index into the TAGS chunk.
 // Chunk_SURF: The SURF chunk adopts a name from the TAGS chunk, and assigns surface properties to that name. 
-
-// Point
 
 
 
@@ -61,25 +62,14 @@ class LWOB_Builder
 
 		void write(std::string filename);
 		void add_points( std::vector<Vector3D> points );
-		void add_faces( std::vector<IFF::Face> faces );
-		void add_faces( std::vector<IFF::Face> faces, std::string surfaceID ); 
+		void add_faces(std::vector<Object3D::Face> &faces);
+		void add_faces(std::vector<Object3D::Face> &faces, std::string surfaceID);
+		void add_faces( std::vector<IFF::Face> &faces );
+		void add_faces( std::vector<IFF::Face> &faces, std::string surfaceID ); 
+		void add_object(Object3D o, std::string ID);
+		
 		void add_surface(Chunk_SURF surf );
 		int  get_surface_index_by_name(std::string name);
 		
 		inline void add_tag(std::string tag) { tag_strings.add_tag_string(tag); }
 };
-
-// Ok I've generated the points on my sphereO
-// Ok I've generated the points on sphereC
-
-// lw_object.add_surface_id( "Atom.O" );
-// lw_object.add_surface_id( "Atom.C" );
-
-// lw_object.add_points( sphereO_point_array )
-// lw_object.add_faces( sphereO_face_array, "Atom.O" )
-// lw_object.add_faces( sphereO_some_other_face_array, "some_other_surface_name" );
-
-// lw_object.add_points( sphereC_point_array );
-// lw_object.add_faces( sphereC_face_array, "Atom.C" )
-
-

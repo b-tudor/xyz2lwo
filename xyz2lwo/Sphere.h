@@ -1,11 +1,12 @@
 #pragma once
+#include "Object3D.h"
 #include "Vector3D.h"
-#include "IFF.h"
 
 
 
 
-class Sphere
+
+class Sphere : public Object3D
 {
 public:
 
@@ -14,12 +15,6 @@ public:
 
 	Sphere( Vector3D r, double radius, int depth );
 	~Sphere();
-
-	std::vector<Vector3D> points;
-	std::vector<IFF::Face> faces;
-	
-	std::vector<Vector3D>  *point_data() { return &points; }
-	std::vector<IFF::Face> * face_data() { return &faces;  }
 
 private:
 

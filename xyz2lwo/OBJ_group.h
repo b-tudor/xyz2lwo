@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "IFF.h"
+#include "Object3D.h"
 #include "Vector3D.h"
 
 class OBJ_group {
@@ -13,7 +14,7 @@ class OBJ_group {
 		std::string Name;
 		std::string Material;
 		std::vector<Vector3D> Vertices;
-		std::vector<IFF::Face> Faces;
+		std::vector<Object3D::Face> Faces;
 
 	// Methods
 
@@ -26,7 +27,7 @@ class OBJ_group {
 		std::string name    () { return Name; }
 		std::string material() { return Material; }
 		std::vector<Vector3D> &points  () { return Vertices; }
-		std::vector<IFF::Face>& faces  () { return Faces;    }
+		std::vector<Object3D::Face>& faces  () { return Faces;    }
 		
 		// Setters
 		void set_name    (std::string n) {     Name = n; }
@@ -34,7 +35,7 @@ class OBJ_group {
 		
 		// Add Geometry
 		void add_points( std::vector<Vector3D>  &p );
-		void add_faces ( std::vector<IFF::Face> &polygons );
-		void add_faces ( std::vector<IFF::Face> &polygons, std::string objectName );
-		void add_faces ( std::vector<IFF::Face> &polygons, std::string objectName, std::string materialName );
+		void add_faces ( std::vector<Object3D::Face> &polygons );
+		void add_faces ( std::vector<Object3D::Face> &polygons, std::string objectName );
+		void add_faces ( std::vector<Object3D::Face> &polygons, std::string objectName, std::string materialName );
 };

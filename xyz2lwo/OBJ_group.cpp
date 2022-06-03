@@ -9,34 +9,22 @@ OBJ_group::OBJ_group() {
 void OBJ_group::add_points( std::vector<Vector3D> &points ) {
 
 	// transfer the passed-in points into the .OBJ's data
-	for( auto p:points )
+	for( auto& p:points )
 		Vertices.push_back(p);
 }
 
 
 
 
-// Transfer the passed-in points into the .OBJ's data. Each polygon references the
-// points in "vertices" by number, where the numbering of the vertices starts at 1
 
 
-
-
-
-
-
-
-
-
-
-
-void OBJ_group::add_faces(std::vector<IFF::Face>& FacesToAdd) {
+void OBJ_group::add_faces(std::vector<Object3D::Face>& FacesToAdd) {
 	add_faces(FacesToAdd, "Default");
 }
-void OBJ_group::add_faces(std::vector<IFF::Face>& FacesToAdd, std::string objectName) {
+void OBJ_group::add_faces(std::vector<Object3D::Face>& FacesToAdd, std::string objectName) {
 	add_faces(FacesToAdd, objectName, objectName);
 }
-void OBJ_group::add_faces(std::vector<IFF::Face>& FacesToAdd, std::string objectName, std::string materialName) {
+void OBJ_group::add_faces(std::vector<Object3D::Face>& FacesToAdd, std::string objectName, std::string materialName) {
 	set_name(objectName);
 	set_material(materialName);
 	for (auto f : FacesToAdd)

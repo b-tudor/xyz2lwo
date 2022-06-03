@@ -23,36 +23,12 @@ void OBJ::add_group(OBJ_group og) {
 }
 
 
-
-/*
-int LWOB_Builder::get_surface_index_by_name( std::string name ) {
-
-	int idx = -1;
-
-	for( unsigned int i=0; i<tag_strings.tag_strings.size(); i++ ) {
-		if( ! name.compare(tag_strings.tag_strings[i]) ) {
-			idx = i;
-			break;
-		}
-	}
-
-	if (idx < 0) 
-		idx = tag_strings.add_tag_string(name);
-		
-	return idx;
+void OBJ::add_object(Object3D obj, std::string ID) {
+	OBJ_group oGroup;
+	oGroup.add_points( obj.points );
+	oGroup.add_faces ( obj.faces, ID );
+	add_group( oGroup );
 }
-*/
-
-/*
-void LWOB_Builder::add_surface(Chunk_SURF s) {
-
-	Chunk_SURF * surf = new Chunk_SURF();
-
-	*surf = s;
-
-	lw_object.add_chunk(*surf);
-}
-*/
 
 
 void OBJ::write(std::string filename) {

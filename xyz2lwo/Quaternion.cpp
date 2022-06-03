@@ -1,10 +1,14 @@
+// Quaternion C++ Class (Definition)
+// https://github.com/b-tudor/Quaternion
+
 #include "Quaternion.h"
 #include <cmath>
 
-
-Quaternion::Quaternion(): X(0), Y(0), Z(0), W(0) {}
-Quaternion::Quaternion(double x, double y, double z, double w): X(x), Y(y), Z(z), W(w) {}
-Quaternion::Quaternion( double x, double y, double z, double w, AngleMeasureMode units ) {
+Quaternion::~Quaternion() {}
+Quaternion:: Quaternion(): X(0), Y(0), Z(0), W(0) {}
+Quaternion:: Quaternion( double x, double y, double z, double w): X(x), Y(y), Z(z), W(w) {}
+Quaternion:: Quaternion( double x, double y, double z, double w, AngleMode units ) {
+	// Construct a quaternion from a rotation axis and a rotation angle
 
 	double angle     = w;
 	double sinAngle  = 0,
@@ -12,14 +16,17 @@ Quaternion::Quaternion( double x, double y, double z, double w, AngleMeasureMode
 
 	switch( units ) {
 
-		case DEGREES:  // Construct a quaternion from a rotation axis and a rotation angle (in degress)
-			angle /= 57.2957795; // Convert angle from degrees to radians, prior to the normal AXIS_ANGLE_RADIAN treatment (below)
-		case RADIANS:  // Construct quaternion from an axis and an angle (in radians)
+		case AngleMode::DEGREES:   // Convert angle from degrees to radians, prior to the normal units==RADIANS
+			angle /= 57.2957795;   // treatment (i.e. the following CASE FALL-THROUGH IS INTENTIONAL)
+
+		case AngleMode::RADIANS:   // Construct quaternion from an axis and an angle (in radians)
 			
-			// Normalizes the axis vector
+			// Normalize the axis vector /////////////////////////////////////////////////////////////////////////
+
 			magnitude = sqrt( x*x + y*y + z*z );
 
-			// Edge case, if the axis to rotate around doesn't exist just return a quaternion with no rotation
+			// Edge case, if the axis to rotate around doesn't
+			// exist just return a quaternion with no rotation
 			if( magnitude == 0.0 ) {
 				this->X = 0;
 				this->Y = 0;
@@ -31,6 +38,9 @@ Quaternion::Quaternion( double x, double y, double z, double w, AngleMeasureMode
 			x = x/magnitude;
 			y = y/magnitude;
 			z = z/magnitude;
+
+			//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 			sinAngle = sin(angle/2.0);
 		
@@ -44,60 +54,17 @@ Quaternion::Quaternion( double x, double y, double z, double w, AngleMeasureMode
 		default:
 			throw "Quaternion: Invalid units specified for the constructor angle.";
 			break;
-	}
+	} // switch(units)
 }
-Quaternion::Quaternion(Vector3D v, double w, AngleMeasureMode units ) {
-	double angle = w;
-	double sinAngle = 0;
-	double magnitude = 0;
-	double x = v.x();
-	double y = v.y();
-	double z = v.z();
-
-	switch (units) {
-
-	case DEGREES:  // Construct a quaternion from a rotation axis and a rotation angle (in degress)
-		angle /= 57.2957795; // Convert angle from degrees to radians, prior to the normal AXIS_ANGLE_RADIAN treatment (below)
-	case RADIANS:  // Construct quaternion from an axis and an angle (in radians)
-
-		// Normalizes the axis vector
-		magnitude = sqrt(x*x + y * y + z * z);
-
-		// Edge case, if the axis to rotate around doesn't exist just return a quaternion with no rotation
-		if (magnitude == 0.0) {
-			this->X = 0;
-			this->Y = 0;
-			this->Z = 0;
-			this->W = 1;
-			return;
-		}
-
-		x = x / magnitude;
-		y = y / magnitude;
-		z = z / magnitude;
-
-		sinAngle = sin(angle / 2.0);
-
-		this->X = x * sinAngle;
-		this->Y = y * sinAngle;
-		this->Z = z * sinAngle;
-		this->W = cos(angle / 2.0);
-		break;
-
-	default:
-		throw "Quaternion: Invalid units specified for the constructor angle.";
-		break;
-	}
-}
-Quaternion::Quaternion(Vector3D v) {
+Quaternion:: Quaternion( Vector3D v, double w, AngleMode units) : Quaternion(v.x(), v.y(), v.z(), w, units) {}
+Quaternion:: Quaternion( Vector3D v ) {
 	X = v.x();
 	Y = v.y();
 	Z = v.z();
 	W = 0;
 }
 
-Quaternion::~Quaternion()
-{}
+
 
 
 // Normalize quaternion

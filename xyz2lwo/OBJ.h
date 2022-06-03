@@ -1,6 +1,6 @@
 #pragma once
-#include "IFF.h"
 #include "OBJ_group.h"
+#include "Object3D.h"
 #include "Vector3D.h"
 
 #include <vector>
@@ -82,6 +82,7 @@ class OBJ
 		~OBJ();
 
 		void write(std::string filename); // Generate the output file
+		void add_object(Object3D o, std::string ID);
 		void add_group(OBJ_group);
 		
 		//void add_points( std::vector<Vector3D> points );

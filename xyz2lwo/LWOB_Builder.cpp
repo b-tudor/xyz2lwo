@@ -47,11 +47,30 @@ void LWOB_Builder::add_points( std::vector<Vector3D> points ) {
 }
 
 
+void LWOB_Builder::add_faces(std::vector<Object3D::Face> &faces) {
+	add_faces( faces, "Default" );
+}
+void LWOB_Builder::add_faces(std::vector<Object3D::Face> &faces, std::string surfaceID) {
 
-void LWOB_Builder::add_faces( std::vector<IFF::Face> faces ) {
+	Chunk_POLS* ckPolys = new Chunk_POLS();
+	Chunk_PTAG* ckPolySurfs = new Chunk_PTAG();
+
+	lw_object.add_chunk(*ckPolys);
+	lw_object.add_chunk(*ckPolySurfs);
+
+	int surfIdx = get_surface_index_by_name(surfaceID);
+
+	for( auto& f:faces ) {
+
+		IFF::Face iffFace = f;
+		ckPolys->add_face(iffFace);
+		ckPolySurfs->add_surface(surfIdx);
+	}
+}
+void LWOB_Builder::add_faces( std::vector<IFF::Face> &faces ) {
 	add_faces(faces, "Default");
 }
-void LWOB_Builder::add_faces( std::vector<IFF::Face> faces, std::string surfaceID ) {
+void LWOB_Builder::add_faces( std::vector<IFF::Face> &faces, std::string surfaceID ) {
 
 	Chunk_POLS * ckPolys     = new Chunk_POLS();
 	Chunk_PTAG * ckPolySurfs = new Chunk_PTAG();
@@ -65,6 +84,13 @@ void LWOB_Builder::add_faces( std::vector<IFF::Face> faces, std::string surfaceI
 		ckPolys->add_face(faces[i]);
 		ckPolySurfs->add_surface(surfIdx);
 	}
+}
+
+
+
+void LWOB_Builder::add_object(Object3D obj, std::string ID) {
+	add_points( obj.points );
+	add_faces(  obj.faces, ID );
 }
 
 

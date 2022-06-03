@@ -72,6 +72,9 @@
     <ClCompile Include="..\xyz2lwo\OBJ_group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\xyz2lwo\Object3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\xyz2lwo\args.h">
@@ -129,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\xyz2lwo\OBJ_group.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xyz2lwo\Object3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

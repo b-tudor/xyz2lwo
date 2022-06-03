@@ -1,4 +1,5 @@
-/*  Quaternion C++ Class
+/*  Quaternion C++ Class (Header)
+ *  https://github.com/b-tudor/Quaternion
  * 
  *  CONSTRUCTORS
  *    Quaternion() - creates a 0'd out quaternion
@@ -37,13 +38,13 @@
 class Quaternion
 {
 public:
-	enum AngleMeasureMode { RADIANS, DEGREES };
+	enum class AngleMode { RADIANS, DEGREES };
 
 	Quaternion();
 	Quaternion(double x, double y, double z, double w);
-	Quaternion( double x, double y, double z, double w, AngleMeasureMode units );
+	Quaternion( double x, double y, double z, double w, AngleMode units );
 	Quaternion(Vector3D v);
-	Quaternion(Vector3D v, double angle, AngleMeasureMode units );
+	Quaternion(Vector3D v, double angle, AngleMode units );
 	~Quaternion();
 
 	

@@ -20,7 +20,7 @@ IFF:: IFF() {
 
 //  STATIC METHODS & VARIABLES  ///////////////////////////////////////////////////////////////////////////////////////
 
-IFF::endian_type IFF::endian = UNINITIALIZED;
+IFF::EndianType IFF::endian = EndianType::UNINITIALIZED;
 
 
 
@@ -28,7 +28,7 @@ bool IFF::initialize() {
 
 	bool ok = true;
 
-	if (endian == UNINITIALIZED) {
+	if (endian == EndianType::UNINITIALIZED) {
 
 		if (sizeof(uBYTE) != 1) {
 			std::cerr << "Incompatible UBYTE width: Type definition for UBYTE (default \"unsigned char\") must evaluate to a 1 byte data type." << std::endl;
@@ -50,9 +50,9 @@ bool IFF::initialize() {
 		char *test = (char *)&endian_test;
 
 		if (!strncmp("ABCD", test, 4))
-			endian = LITTLE;
+			endian = EndianType::LITTLE;
 		else if (!strncmp("DCBA", test, 4))
-			endian = BIG;
+			endian = EndianType::BIG;
 		else {
 			std::cerr << "Incompatible BYTE order:\nThis machine appears to utilize an unfamiliar byte ordering (It does not appear to be the common Big Endian or Little Endian ordering)." << std::endl;
 			ok = false;
@@ -69,17 +69,17 @@ bool IFF::initialize() {
 
 bool IFF::system_is_big_endian() {
 
-	if (endian == UNINITIALIZED)
+	if (endian == EndianType::UNINITIALIZED)
 		initialize();
 
-	return endian == BIG;
+	return endian == EndianType::BIG;
 }
 bool IFF::system_is_little_endian() {
 
-	if (endian == UNINITIALIZED)
+	if (endian == EndianType::UNINITIALIZED)
 		initialize();
 
-	return endian == LITTLE;
+	return endian == EndianType::LITTLE;
 }
 
 

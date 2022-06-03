@@ -152,6 +152,7 @@
     <ClCompile Include="..\xyz2lwo\LWOB_Builder.cpp" />
     <ClCompile Include="..\xyz2lwo\main.cpp" />
     <ClCompile Include="..\xyz2lwo\OBJ.cpp" />
+    <ClCompile Include="..\xyz2lwo\Object3D.cpp" />
     <ClCompile Include="..\xyz2lwo\OBJ_group.cpp" />
     <ClCompile Include="..\xyz2lwo\Quaternion.cpp" />
     <ClCompile Include="..\xyz2lwo\Sphere.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="..\xyz2lwo\IFF.h" />
     <ClInclude Include="..\xyz2lwo\LWOB_Builder.h" />
     <ClInclude Include="..\xyz2lwo\OBJ.h" />
+    <ClInclude Include="..\xyz2lwo\Object3D.h" />
     <ClInclude Include="..\xyz2lwo\OBJ_group.h" />
     <ClInclude Include="..\xyz2lwo\Quaternion.h" />
     <ClInclude Include="..\xyz2lwo\Sphere.h" />

@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Object3D.h"
+
 #include <string>
 #include <vector>
 
@@ -9,22 +12,34 @@ class IFF
 
 	// Types
 	public:
-		enum endian_type { UNINITIALIZED = -1, LITTLE = 0, BIG = 1 };
+
+		enum class EndianType { UNINITIALIZED = -1, LITTLE = 0, BIG = 1 };
 		typedef unsigned char  uBYTE;  //  8-bits unsigned
 		typedef unsigned short uWORD;  // 16-bits unsigned 
 		typedef unsigned long  uLONG;  // 32-bits unsigned
+		
 
-		typedef struct _face {
-			unsigned short vertex_count;
-			unsigned short vertex[4];            // indices of points in most recent PNTS chunk
+		typedef struct _Face {
+			
+			public:
+				unsigned short vertex_count;
+				unsigned short vertex[4];     // indices of points in most recent PNTS chunk
+
+				// Conversion constructor from Object3D::Face to IFF:Face
+				_Face(Object3D::Face f) {
+					vertex_count = f.vertex_count;
+					vertex[0] = f.vertex[0];
+					vertex[1] = f.vertex[1];
+					vertex[2] = f.vertex[2];
+					vertex[3] = f.vertex[3];
+				} 
 		} Face;
-
 
 
 	// Data
 	protected:
 		static bool initialized;
-		static endian_type endian;
+		static EndianType endian;
 		std::vector<Chunk *> chunks;
 
 
