@@ -41,7 +41,9 @@ int main( int argc, char * argv[] )
 	const std::string& outFile = in.outputFile;         // output file name
 	
 
-
+	std::cout << "Output  mode: " << ((in. output_mode == File_Mode::LWO       ) ? "LWO\n" : "OBJ\n");
+	std::cout << "Newline mode: " << ((in.newline_mode == Newline_Mode::DEFAULT) ? "DEFAULT\n" : ((in.newline_mode == Newline_Mode::MSDOS) ? "MS-DOS\n" : "UNIX\n" ));
+	//exit(0);
 
 	// Read the atomic coordinates from the input file //////////////////////////////////////////////////
 	std::ifstream infile(in.inputFile);

@@ -7,7 +7,7 @@
 Sphere::Sphere( Vector3D r, double radius, int depth ) {
 	
 	depth = (depth >= maxDepth) ? maxDepth : depth;
-
+	
 	// Start with a trigonal bipyramid where each point is 1 unit from the origin,
 	// and recursively tesselate each face, depth times to create our sphere. If
 	// we tesselate to depth 1, the result is the starting geometry below: a triangular
