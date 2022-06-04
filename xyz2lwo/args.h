@@ -6,15 +6,18 @@
 #include <iostream>
 #include <sstream>
 
-const char LWO_FILE = (char) 0;
-const char OBJ_FILE = (char) 1;
+
+enum class File_Mode    { LWO, OBJ };
+enum class Newline_Mode { MSDOS, UNIX };
 
 typedef struct _parameters{
-    std::string inputFile;
-    std::string outputFile;
-    bool draw_bonds = false;           // Draw ball-and-stick type bonds between atoms?
-    int tessellation_depth = 3;        // Depth by which to tesselate spheres representing atoms
-    char output_file_type  = LWO_FILE; // Default output file type is LWO
+    std::string          inputFile;
+    std::string         outputFile;
+    bool                draw_bonds = false;            // Draw ball-and-stick type bonds between atoms?
+    int         tessellation_depth = 3;                // Depth by which to tesselate spheres representing atoms
+    File_Mode          output_mode = File_Mode::LWO; // Default output file type is LWO
+    Newline_Mode      newline_mode = Newline_Mode::MSDOS; // Line-endings to use in text-files. 
+
 } params;
  
 
@@ -71,19 +74,34 @@ bool filename_ends_w_OBJ(std::string fname) {
 void displayUsageAndDie( char* progname, params& p ) {
     
     char *progName_wo_path = stripPath( progname );
-
-    std::cout << "Usage:\n";
-    std::cout << "\t" << progName_wo_path << " <input file> [options]\n";
-    std::cout << "Options:\n";
-    std::cout << "\t-b               Use this option to draw bonds.\n";
-    std::cout << "\t-t  DEPTH        Levels of tesselation to use in approximating spherical geometry\n";
-    std::cout << "\t                 via polygons. A higher number will result in smoother spheres, but\n";
-    std::cout << "\t                 accordingly, each sphere will be comprised of an exponentially\n";
-    std::cout << "\t                 increasing number of triangles.\n";
-    std::cout << "\t-o  FILENAME     Output file name.\n";
-    std::cout << "\t                 NOTE: If FILENAME has an.obj extension, the output file produced will\n";
-    std::cout << "\t                 be a Wavefront OBJ file." << std::endl;
+    std::cout << "\n";
+    std::cout << progName_wo_path << " takes an .XYZ molecular geometry file as input, and outputs a high quality geometry file\n";
+    std::cout << "suitable for generating photorealistic images in ray tracing software. LWO files are for use with\n";
+    std::cout << "Lightwave 3D, but the .obj file type is suitable for use in a wide variety of renderers (Blender,\n";
+    std::cout << "Maya, etc.).\n\n";
+    std::cout << "Usage:\n\n";
+    std::cout << "  " << progName_wo_path << " <input file> [options]\n\n";
+    std::cout << "Options:\n\n";
+    std::cout << "  -o FILENAME     Output file name.\n";
+    std::cout << "  -O FILENAME        NOTE: If an output file name is not specified, the output file will have the\n";
+    std::cout << "                      same name as the input file but the extension will be replaced with \".lwo\".\n";
+    std::cout << "                     NOTE: If FILENAME has an.obj extension, the output file produced\n";
+    std::cout << "                      will be a Wavefront (.obj) file. IF THE CAPITAL -O OPTION IS USED, the output\n";
+    std::cout << "                      file will be a Wavefront file, regardless of the file name. \n";
+    std::cout << "  -b              Use this option to draw bonds.\n";
+    std::cout << "  -t DEPTH        Levels of tesselation to use in approximating spherical geometry via polygons.\n";
+    std::cout << "                     A higher number will result in smoother spheres, but accordingly, each sphere\n"; 
+    std::cout << "                     will be comprised of an exponentially increasing number of triangles.\n";
+    std::cout << "  -l -w           When writing OBJ files, " << progName_wo_path << " will attempt to preserve the newline\n";
+    std::cout << "                     character codes used by the input file. To force Unix/Linux style end-of-line\n"; 
+    std::cout << "                     control codes (LF), use the -l option. To force MS-DOS/Windows style EOL encoding\n";
+    std::cout << "                     (CR/LF), use the -w option.These options only matter when the output format is a\n";
+    std::cout << "                     Wavefront (.obj) file.\n\n";
     
+    std::cout << "Sample commands:\n\n";
+    std::cout << "  " << progName_wo_path << " H2O.xyz\n";
+    std::cout << "  " << progName_wo_path << " H2O.xyz -t 3 -o water.lwo\n";
+    std::cout << "  " << progName_wo_path << " benzene.xyz -O C6H6_OBJ_file -b -l\n\n";
     exit(0);
 }
 
@@ -127,7 +145,7 @@ void processArgs( int argc, char * argv[], params& p )
                         displayUsageAndDie(argv[0], p);
                     }
                     if (filename_ends_w_OBJ(p.outputFile))
-                        p.output_file_type = OBJ_FILE;
+                        p.output_mode = File_Mode::OBJ;
                     n++;
                 }
             }

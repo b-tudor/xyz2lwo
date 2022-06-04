@@ -37,7 +37,7 @@ int main( int argc, char * argv[] )
 	// Create aliases for param data for ease of reference:
 	const bool& bonds          = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
 	const bool& tessDepth      = in.tessellation_depth; // Recursive levels of triangular sphere approximation
-	const bool& output_type    = in.output_file_type;   // Type of output file to generate
+	const File_Mode& out_mode  = in.output_mode;        // Type of output file to generate
 	const std::string& outFile = in.outputFile;         // output file name
 	
 
@@ -95,10 +95,10 @@ int main( int argc, char * argv[] )
 		// Store points based on the desired output type
 
 		// Add atomic geometry to the appropriate data structure (as determined by output type)
-		if( output_type == LWO_FILE )
+		if( out_mode == File_Mode::LWO )
 			lwob.add_object( atomicSphere, atom.atomic_symbol );
 		else
-		if( output_type == OBJ_FILE )
+		if( out_mode == File_Mode::OBJ )
 			obj.add_object(atomicSphere, atom.atomic_symbol);
 	}
 
@@ -122,10 +122,10 @@ int main( int argc, char * argv[] )
 					Tube bond(I, J, 0.08, bond_side_count);
 
 					// Add bond geometry to the appropriate data structure (as determined by output type)
-					if( OBJ_FILE == output_type )
+					if( File_Mode::OBJ == out_mode )
 						obj.add_object(bond, "bond" );
 					else 
-					if( LWO_FILE == output_type )
+					if( File_Mode::LWO == out_mode )
 						lwob.add_object(bond, "bond");
 					
 				}
@@ -134,7 +134,7 @@ int main( int argc, char * argv[] )
 		std::cout << "\rProcessing bonds: done.   \n";
 	}
 
-	if (output_type == LWO_FILE) {
+	if (out_mode == File_Mode::LWO) {
 
 		// Add surfaces to the file
 		Chunk_SURF surf_C("C");
@@ -246,10 +246,10 @@ int main( int argc, char * argv[] )
 
 	
 
-	if( output_type == LWO_FILE ) 
+	if( out_mode == File_Mode::LWO ) 
 		lwob.write(in.outputFile);
 	else
-	if( output_type == OBJ_FILE )
+	if( out_mode == File_Mode::OBJ )
 		obj.write(in.outputFile);
 			
 	
