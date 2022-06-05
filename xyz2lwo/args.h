@@ -113,8 +113,8 @@ void displayUsageAndDie( char* progname, params& p ) {
 
 
 
-void processArgs( int argc, char * argv[], params& p )
-{
+void processArgs( int argc, char * argv[], params& p ) {
+
     bool    input_name_already_set = false; // Check if user fails to set the input name (or attempts to set it more than once)
     bool   output_name_already_set = false; // Check if user attempts to set multiple output file names
     

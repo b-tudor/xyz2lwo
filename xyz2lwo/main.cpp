@@ -123,7 +123,7 @@ int main( int argc, char * argv[] )
 				double dZ = atom_list[i].z - atom_list[j].z;
 				double dist2 = dX * dX + dY * dY + dZ * dZ;
 
-				if (is_bond(atom_list[i].atomic_number, atom_list[j].atomic_number, dist2)) {
+				if (Chemical_Data::is_bonded_covalent2(atom_list[i].atomic_number, atom_list[j].atomic_number, dist2)) {
 					// make atom bond between atom i and atom j
 					Vector3D I(atom_list[i].x, atom_list[i].y, atom_list[i].z);
 					Vector3D J(atom_list[j].x, atom_list[j].y, atom_list[j].z);

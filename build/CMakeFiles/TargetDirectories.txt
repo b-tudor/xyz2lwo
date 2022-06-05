@@ -1,3 +1,0 @@
-/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/build/CMakeFiles/rebuild_cache.dir
-/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/build/CMakeFiles/edit_cache.dir
-/mnt/u/brant/Code/Git Repos/xyz2lwo C++ Utility/build/CMakeFiles/xyz2lwo.dir

@@ -18,9 +18,17 @@ public:
 	Chemical_Data();
 	~Chemical_Data();
 
-	bool is_bonded(int i, int j, double dist2); // Determines if two atoms are bonded, based on their distance
-										  // and the covalent radii of each atom.
-
+	// Determines if two atoms are bonded, based on their distance and the covalent radius of each atom.
+	// is_bonded_covalent2() receives distance^2 to avoid call to sqrt(). tolerancePct is a percentage (+/-)
+	// by which to multiply the computed atom-atom bond length in order to allow for a little leeway in 
+	// detecting bonds (a separation distance <= to the computed bond length will return TRUE for bond length
+	// queries).
+	const double DEFAULT_TOLERANCE = 1.03;
+	static inline bool is_bonded_covalent (int i, int j, double dist)                      { return is_bonded_covalent2( i, j, dist*dist, DEFAULT_TOLERANCE); }
+	static inline bool is_bonded_covalent (int i, int j, double dist, double tolerancePct) { return is_bonded_covalent2( i, j, dist*dist, tolerancePct);      }
+	static inline bool is_bonded_covalent2(int i, int j, double dist2)                     { return is_bonded_covalent2( i, j,     dist2, DEFAULT_TOLERANCE); }
+	static        bool is_bonded_covalent2(int i, int j, double dist2, double tolerancePct);
+										  
 	// Get an atomic number from a chemical (string) symbol
 	static int atomic_number(std::string chemical_symbol);
 

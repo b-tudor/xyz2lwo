@@ -7,9 +7,8 @@ set(INCLUDE Chemical_Data Quaternion Vector3D xyz2lwo)
 include_directories(${INCLUDE})
 
 set(SRC 
-	Chemical_Data/Chemical_Data.cpp
-	Quaternion/Quaternion.cpp
-	Vector3D/Vector3D.cpp
+
+	xyz2lwo/Chemical_Data.cpp
 	xyz2lwo/Chunk.cpp
 	xyz2lwo/Chunk_BBOX.cpp
 	xyz2lwo/Chunk_FORM_LWO2.cpp
@@ -21,8 +20,13 @@ set(SRC
 	xyz2lwo/Chunk_TAGS.cpp
 	xyz2lwo/IFF.cpp
 	xyz2lwo/LWOB_Builder.cpp
+	xyz2lwo/OBJ_group.cpp
+	xyz2lwo/Object3D.cpp
+	xyz2lwo/Quaternion.cpp
 	xyz2lwo/Sphere.cpp
 	xyz2lwo/Tube.cpp
+	xyz2lwo/Vector3D.cpp
+
 	xyz2lwo/main.cpp
 )
 
