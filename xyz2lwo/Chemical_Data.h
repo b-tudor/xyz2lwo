@@ -18,6 +18,8 @@ public:
 	Chemical_Data();
 	~Chemical_Data();
 
+	bool is_bonded(int i, int j, double dist2); // Determines if two atoms are bonded, based on their distance
+										  // and the covalent radii of each atom.
 
 	// Get an atomic number from a chemical (string) symbol
 	static int atomic_number(std::string chemical_symbol);

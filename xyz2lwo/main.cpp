@@ -13,7 +13,7 @@
 #include <sstream>
 
 
-
+// Data structure used to describe atoms
 typedef struct _xyzAtom {
 	int atomic_number = 0;
 	std::string atomic_symbol;
@@ -25,8 +25,9 @@ typedef struct _xyzAtom {
 
 const int bond_side_count = 10;           // Number of sides in tube objects that form ball-and-stick bonds
 
-bool is_bond(int i, int j, double dist2); // Determines if two atoms are bonded, based on their distance
-                                          // and the covalent radii of each atom.
+
+
+
 
 
 int main( int argc, char * argv[] )
@@ -43,7 +44,12 @@ int main( int argc, char * argv[] )
 
 	std::cout << "Output  mode: " << ((in. output_mode == File_Mode::LWO       ) ? "LWO\n" : "OBJ\n");
 	std::cout << "Newline mode: " << ((in.newline_mode == Newline_Mode::DEFAULT) ? "DEFAULT\n" : ((in.newline_mode == Newline_Mode::MSDOS) ? "MS-DOS\n" : "UNIX\n" ));
-	//exit(0);
+	
+	const char CRNL[3] = { (char) 0x0d, (char) 0x0a, (char) 0x00 };
+	const char   NL[3] = { (char) 0x0a, (char) 0x00, (char) 0x00 };
+	if (in.newline_mode == Newline_Mode::DEFAULT) {
+		// Discover NewLine encoding of the input file
+	}
 
 	// Read the atomic coordinates from the input file //////////////////////////////////////////////////
 	std::ifstream infile(in.inputFile);
@@ -260,18 +266,3 @@ int main( int argc, char * argv[] )
 
 
 
-bool is_bond(int i, int j, double dist2) {
-	
-	double len = -1;
-
-	double covalent_radius_i = Chemical_Data::covalent_radius(i);
-	double covalent_radius_j = Chemical_Data::covalent_radius(j);
-	double bond_length = (covalent_radius_i + covalent_radius_j) * 1.03; // giving atom 3% tolerance here
-	double bond_len2 = bond_length * bond_length;
-
-	if (dist2 < bond_len2)
-		return true;
-	else
-		return false;
-
-}
