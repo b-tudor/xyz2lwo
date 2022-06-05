@@ -625,3 +625,15 @@ double Chemical_Data::van_der_Waals_radius(int atomic_number) {
 
 	return  (atomic_number >= 1 && atomic_number <= 118) ? vdW_radius[atomic_number] : -1.0;
 }
+
+
+bool Chemical_Data::is_bonded_covalent2( int i, int j, double dist2, double tolerance ) {
+	
+	double len = -1;
+	double covalent_radius_i = Chemical_Data::covalent_radius(i);
+	double covalent_radius_j = Chemical_Data::covalent_radius(j);
+	double bond_length = (covalent_radius_i + covalent_radius_j) * tolerance;
+	double bond_len2 = bond_length * bond_length;
+	
+	return (dist2 < bond_len2);
+}

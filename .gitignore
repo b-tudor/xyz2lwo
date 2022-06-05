@@ -345,3 +345,6 @@ build/CMakeCache.txt
 bulid/CMakeFiles/
 build/Makefile
 build/cmake_install.cmake
+
+# VS Code generated files
+.vscode/
