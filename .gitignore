@@ -342,9 +342,10 @@ healthchecksdb
 
 # CMake Generated Files
 build/CMakeCache.txt
-bulid/CMakeFiles/
+build/CMakeFiles
 build/Makefile
 build/cmake_install.cmake
+build/xyz2lwo
 
 # VS Code generated files
 .vscode/

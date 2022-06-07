@@ -13,6 +13,7 @@ class OBJ_group {
 	private:
 		std::string Name;
 		std::string Material;
+		bool        Smooth;
 		std::vector<Vector3D> Vertices;
 		std::vector<Object3D::Face> Faces;
 
@@ -24,14 +25,16 @@ class OBJ_group {
 		OBJ_group();
 
 		// Getters
-		std::string name    () { return Name; }
+		std::string name    () { return Name;     }
 		std::string material() { return Material; }
-		std::vector<Vector3D> &points  () { return Vertices; }
+		bool        smooth  () { return Smooth;   }
+		std::vector<Vector3D>      &points  () { return Vertices; }
 		std::vector<Object3D::Face>& faces  () { return Faces;    }
 		
 		// Setters
-		void set_name    (std::string n) {     Name = n; }
-		void set_material(std::string m) { Material = m; };
+		void set_name     ( std::string n ) {     Name = n; }
+		void set_material ( std::string m ) { Material = m; }
+		void set_smoothing(        bool s ) {   Smooth = s; }
 		
 		// Add Geometry
 		void add_points( std::vector<Vector3D>  &p );

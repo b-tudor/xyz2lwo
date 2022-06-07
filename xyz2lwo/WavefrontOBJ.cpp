@@ -1,9 +1,10 @@
-#include "OBJ.h"
+#include "WavefrontOBJ.h"
 
 
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+
 
 #include "OBJ_group.h"
 #include "Sphere.h"
@@ -12,18 +13,24 @@
 
 //  CONSTRUCTORS / DESTRUCTORS  ///////////////////////////////////////////////////////////////////////////////////////
 
-OBJ::~OBJ() {}
-OBJ:: OBJ() {}
+WavefrontOBJ::~WavefrontOBJ() {
+	#ifdef WIN32
+		outputMode = outMode::MSDOS;
+	#else	
+		outputMode = outMode::UNIX;
+	#endif
+}
+WavefrontOBJ:: WavefrontOBJ() {}
 
 
 
 
-void OBJ::add_group(OBJ_group og) {
+void WavefrontOBJ::add_group(OBJ_group og) {
 	groups.push_back(og);
 }
 
 
-void OBJ::add_object(Object3D obj, std::string ID) {
+void WavefrontOBJ::add_object(Object3D obj, std::string ID) {
 	OBJ_group oGroup;
 	oGroup.add_points( obj.points );
 	oGroup.add_faces ( obj.faces, ID );
@@ -31,7 +38,19 @@ void OBJ::add_object(Object3D obj, std::string ID) {
 }
 
 
-void OBJ::write(std::string filename) {
+void WavefrontOBJ::write(std::string filename ) {
+	
+	// Sort out the EOL character based on the desired style of text file output
+	const char CRNL[3] = { (char) 0x0d, (char) 0x0a, (char) 0x00 }; // 
+	const char *EOL = nullptr;
+	if( outputMode == outMode::MSDOS )
+		EOL = CRNL;       // MS-DOS gets the full carriage return + newline output sequence
+	else
+	if( outputMode == outMode::UNIX  )
+		EOL = &(CRNL[1]); // Unix output just gets the Newline character only
+
+
+
 
 	int nGroups = (int) groups.size();
 	if( nGroups == 0)
@@ -48,7 +67,11 @@ void OBJ::write(std::string filename) {
 
 
 	// open the file
-	//std::ofstream outFile(filename, std::ios::binary | std::ios::out);
+	std::ofstream outFile( filename, std::ofstream::out );
+	if(!outFile) {
+		std::cout << "Unable to open output file: " << filename << "\nOutput file was not written." << std::endl;
+		return;
+	}
 
 	// Write all the data sections
 	
@@ -60,7 +83,7 @@ void OBJ::write(std::string filename) {
 		offset.push_back( (int) g.points().size() );
 
 		for (auto& p : g.points())
-			std::cout << std::fixed << std::setprecision(6) << "v " << p.x() << " " << p.y() << " " << p.z() << "\n";
+			outFile << std::fixed << std::setprecision(6) << "v " << p.x() << " " << p.y() << " " << p.z() << EOL;
 	}
 	
 	// Compute cumulative offset
@@ -83,17 +106,19 @@ void OBJ::write(std::string filename) {
 
 		groupNo++; // Used to index into the correct offset when referring to vertices
 
-		std::cout << "g "      << g.name()     << "\n";
-		std::cout << "usemtl " << g.material() << "\n";
+		outFile << "g " << g.name() << EOL;
+		if(g.smooth())
+			outFile << "s " << groupNo << EOL;
+		outFile << "usemtl " << g.material() << EOL;
 
 		for( auto& f : g.faces()) {
-			std::cout << "f ";
+			outFile << "f ";
 			for(int i=0; i<f.vertex_count; i++ )
-				std::cout << f.vertex[i] + offset[groupNo] << " ";
-			std::cout << "\n";
+				outFile << f.vertex[i] + offset[groupNo] << " ";
+			outFile << EOL;
 		}
 	}
 	
 	// close file
-	//outFile.close();
+	outFile.close();
 }

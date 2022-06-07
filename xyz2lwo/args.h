@@ -75,7 +75,7 @@ void displayUsageAndDie( char* progname, params& p ) {
     
     char *progName_wo_path = stripPath( progname );
     std::cout << "\n";
-    std::cout << progName_wo_path << " takes an .XYZ molecular geometry file as input, and outputs a high quality geometry file\n";
+    std::cout << progName_wo_path << " takes an .XYZ molecular geometry file as input and outputs a high quality geometry file\n";
     std::cout << "suitable for generating photorealistic images in ray tracing software. LWO files are for use with\n";
     std::cout << "Lightwave 3D, but the .obj file type is suitable for use in a wide variety of renderers (Blender,\n";
     std::cout << "Maya, etc.).\n\n";

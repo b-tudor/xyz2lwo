@@ -70,28 +70,26 @@
 
 
 
-class OBJ
+class WavefrontOBJ
 {
+	private:
+
+		enum class outMode {MSDOS, UNIX};
 	// Data
 		std::vector<OBJ_group> groups;
-		
+		outMode outputMode;
 
 	// Methods
 	public:
-		OBJ();
-		~OBJ();
+		WavefrontOBJ();
+		~WavefrontOBJ();
 
+		inline void setOutputMode_Unix() { outputMode = outMode::UNIX;  }
+		inline void setOutputMode_MSDOS(){ outputMode = outMode::MSDOS; }
 		void write(std::string filename); // Generate the output file
 		void add_object(Object3D o, std::string ID);
 		void add_group(OBJ_group);
 		
-		//void add_points( std::vector<Vector3D> points );
-		//void add_faces( std::vector<IFF::Face> faces );
-		//void add_faces( std::vector<IFF::Face> faces, std::string surfaceID ); 
-		//void add_surface(Chunk_SURF surf );
-		//int  get_surface_index_by_name(std::string name);
-		
-		//inline void add_tag(std::string tag) { tag_strings.add_tag_string(tag); }
 };
 
 

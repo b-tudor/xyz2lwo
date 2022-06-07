@@ -14,9 +14,9 @@ class IFF
 	public:
 
 		enum class EndianType { UNINITIALIZED = -1, LITTLE = 0, BIG = 1 };
-		typedef unsigned char  uBYTE;  //  8-bits unsigned
-		typedef unsigned short uWORD;  // 16-bits unsigned 
-		typedef unsigned long  uLONG;  // 32-bits unsigned
+		typedef uint8_t   uBYTE;  //  8-bits unsigned (must be an 8 bit type)
+		typedef uint16_t  uWORD;  // 16-bits unsigned (must be a 16 bit type)
+		typedef uint32_t  uLONG;  // 32-bits unsigned (must be a 32 bit type)
 		
 
 		typedef struct _Face {

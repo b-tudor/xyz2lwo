@@ -20,6 +20,7 @@ set(SRC
 	xyz2lwo/Chunk_TAGS.cpp
 	xyz2lwo/IFF.cpp
 	xyz2lwo/LWOB_Builder.cpp
+	xyz2lwo/WavefrontOBJ.cpp
 	xyz2lwo/OBJ_group.cpp
 	xyz2lwo/Object3D.cpp
 	xyz2lwo/Quaternion.cpp

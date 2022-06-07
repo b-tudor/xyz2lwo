@@ -31,7 +31,7 @@ public:
 	
 	// Each triangle in FACE is 8 bytes: a uSHORT (2 bytes) stating how many vertices the next polygon contains (3), 
 	// followed by that many uSHORTs (which are indices into the previous PNTS chunk).
-	inline unsigned long chunk_data_size(); // Size of the data contained in the chunk
+	unsigned long chunk_data_size(); // Size of the data contained in the chunk
 	inline size_t chunk_buffer_size()  { return chunk_data_size() + 8; }; 
 	inline IFF::uLONG  chunk_data_size_BigE() { return IFF::encode_BigEndian_32_unsigned(chunk_data_size()); }
 	//inline IFF::uLONG chunk_buffer_size_BigE() { return IFF::encode_BigEndian_32_unsigned(chunk_buffer_size()); }

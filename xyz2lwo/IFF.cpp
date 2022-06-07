@@ -57,7 +57,6 @@ bool IFF::initialize() {
 			std::cerr << "Incompatible BYTE order:\nThis machine appears to utilize an unfamiliar byte ordering (It does not appear to be the common Big Endian or Little Endian ordering)." << std::endl;
 			ok = false;
 		}
-
 	}
 
 	if (!ok)

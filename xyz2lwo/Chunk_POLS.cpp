@@ -39,11 +39,8 @@ unsigned long Chunk_POLS::chunk_data_size() {
 	// guaranteed two bytes for every poly record (short indicating face count for poly)
 	// + four bytes for data identifier ('FACE')
 	unsigned long size = (unsigned long) faces.size() * 2 + 4; 
-
 	// 2 bytes for every vertex in every poly record
-	for_each(faces.begin(), faces.end(), [&size]( IFF::Face f ) {
+	for( auto f:faces )
 		size += 2 * f.vertex_count;
-	});
-	
 	return size;
 }

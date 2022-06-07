@@ -2,7 +2,7 @@
 #include "Chemical_Data.h"  // https://github.com/b-tudor/Chemical_Data
 #include "Chunk_SURF.h"
 #include "LWOB_Builder.h"
-#include "OBJ.h"
+#include "WavefrontOBJ.h"
 #include "Sphere.h"
 #include "Tube.h"
 
@@ -36,20 +36,23 @@ int main( int argc, char * argv[] )
 	params in;
 	processArgs(argc, argv, in); 
 	// Create aliases for param data for ease of reference:
-	const bool& bonds          = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
-	const bool& tessDepth      = in.tessellation_depth; // Recursive levels of triangular sphere approximation
-	const File_Mode& out_mode  = in.output_mode;        // Type of output file to generate
-	const std::string& outFile = in.outputFile;         // output file name
+	const bool& bonds           = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
+	const bool& tessDepth       = in.tessellation_depth; // Recursive levels of triangular sphere approximation
+	const File_Mode&   out_mode = in.output_mode;        // Type of output file to generate
+	const Newline_Mode EOL_mode = in.newline_mode;       // Will text files mark EOL with LF or CR/LF
+	const std::string&  outFile = in.outputFile;         // output file name
 	
 
 	std::cout << "Output  mode: " << ((in. output_mode == File_Mode::LWO       ) ? "LWO\n" : "OBJ\n");
 	std::cout << "Newline mode: " << ((in.newline_mode == Newline_Mode::DEFAULT) ? "DEFAULT\n" : ((in.newline_mode == Newline_Mode::MSDOS) ? "MS-DOS\n" : "UNIX\n" ));
 	
-	const char CRNL[3] = { (char) 0x0d, (char) 0x0a, (char) 0x00 };
-	const char   NL[3] = { (char) 0x0a, (char) 0x00, (char) 0x00 };
+	
 	if (in.newline_mode == Newline_Mode::DEFAULT) {
 		// Discover NewLine encoding of the input file
+		in.newline_mode = Newline_Mode::UNIX;
 	}
+	
+
 
 	// Read the atomic coordinates from the input file //////////////////////////////////////////////////
 	std::ifstream infile(in.inputFile);
@@ -75,13 +78,24 @@ int main( int argc, char * argv[] )
 	}
 	
 
-
-
 	// Generate the geometry from the atomic coordinates ////////////////////////////////////////////////
 	
 
 	LWOB_Builder lwob;
-	OBJ          obj;
+	WavefrontOBJ  obj;
+	if( in.output_mode==File_Mode::OBJ ){
+		if(EOL_mode==Newline_Mode::MSDOS)
+			obj.setOutputMode_MSDOS();
+		else if (EOL_mode==Newline_Mode::UNIX)
+			obj.setOutputMode_Unix();
+		else
+			#ifdef WIN32
+				obj.setOutputMode_MSDOS();
+			#else
+				obj.setOutputMode_Unix();
+			#endif
+	}
+
 	int count = 0;
 	// Add the atoms to the file
 	
@@ -252,7 +266,7 @@ int main( int argc, char * argv[] )
 		}
 	}
 
-	
+	std::cout << "DATA STRUCTURES HAVE BEEN MADEN." << std::endl;
 
 	if( out_mode == File_Mode::LWO ) 
 		lwob.write(in.outputFile);

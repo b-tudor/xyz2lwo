@@ -498,7 +498,7 @@ double Chemical_Data::covalent_radius(int atomic_number) {
 
 
 double Chemical_Data::van_der_Waals_radius(int atomic_number) {
-	// Source: https://develop.open.wolframcloud.com/app/ (accessed 3/14/2019)
+	// Unless otherwise noted, source is: https://develop.open.wolframcloud.com/app/ (accessed 3/14/2019)
 	// Dataset[EntityValue[Entity["Element", "Radon"], {EntityProperty["Element", "AtomicRadius"], EntityProperty["Element", "CovalentRadius"], EntityProperty["Element", "VanDerWaalsRadius"]}, "PropertyAssociation"]]
 
 	const double vdW_radius[119] = {
@@ -506,8 +506,8 @@ double Chemical_Data::van_der_Waals_radius(int atomic_number) {
 		1.20,  // H
 		1.40,  // He
 		1.82,  // Li
-		0,     // Be
-		0,     // B
+		1.53,  // Be -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
+		1.92,  // B  -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		1.70,  // C
 		1.55,  // N
 		1.52,  // O
@@ -515,15 +515,15 @@ double Chemical_Data::van_der_Waals_radius(int atomic_number) {
 		1.54,  // Ne
 		2.27,  // Na
 		1.73,  // Mg
-		0,     // Al
+		1.84,  // Al -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		2.10,  // Si
 		1.80,  // P
 		1.80,  // S
 		1.75,  // Cl
 		1.88,  // Ar
 		2.75,  // K
-		0,     // Ca
-		0,     // Sc
+		2.31,  // Ca -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
+		2.11,  // Sc -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		0,     // Ti
 		0,     // V
 		0,     // Cr
@@ -534,13 +534,13 @@ double Chemical_Data::van_der_Waals_radius(int atomic_number) {
 		1.40,  // Cu
 		1.39,  // Zn
 		1.87,  // Ga
-		0,     // Ge
+		2.11,  // Ge -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		1.85,  // As
 		1.90,  // Se
 		1.85,  // Br
 		2.02,  // Kr
-		0,     // Rb
-		0,     // Sr
+		3.03,  // Rb -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
+		2.49,  // Sr -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		0,     // Y
 		0,     // Zr
 		0,     // Nb
@@ -553,12 +553,12 @@ double Chemical_Data::van_der_Waals_radius(int atomic_number) {
 		1.58,  // Cd
 		1.93,  // In
 		2.17,  // Sn
-		0,     // Sb
+		2.06,  // Sb -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		2.06,  // Te
 		1.98,  // I
 		2.16,  // Xe
-		0,     // Cs
-		0,     // Ba
+		3.43,  // Cs -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
+		2.68,  // Ba -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		0,     // La
 		0,     // Ce
 		0,     // Pr
@@ -585,10 +585,10 @@ double Chemical_Data::van_der_Waals_radius(int atomic_number) {
 		1.55,  // Hg
 		1.96,  // Tl
 		2.02,  // Pb
-		0,     // Bi
-		0,     // Po
-		0,     // At
-		0,     // Rn
+		2.07,  // Bi -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
+		1.97,  // Po -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
+		2.02,  // At -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
+		2.20,  // Rn -- Mantina, M. (2009).  J.Phys.Chem. A. 113 (19): 5806–5812.
 		0,     // Fr
 		0,     // Ra
 		0,     // Ac

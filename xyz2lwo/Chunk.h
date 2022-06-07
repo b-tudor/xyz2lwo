@@ -37,7 +37,7 @@ public:
 	virtual void write(std::ofstream &outFile )   = 0;
 	virtual unsigned long chunk_data_size()       = 0;
 	virtual IFF::uLONG    chunk_data_size_BigE()  = 0;
-	virtual size_t chunk_buffer_size()     = 0;
+	virtual size_t        chunk_buffer_size()     = 0;
 	//virtual IFF::uLONG    chunk_size_BigE()     = 0;
 
 protected:
