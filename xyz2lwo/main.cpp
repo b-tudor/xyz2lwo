@@ -148,11 +148,8 @@ int main( int argc, char * argv[] )
 						obj.add_object(bond, "bond" );
 					else 
 					if( File_Mode::LWO == out_mode )
-						lwob.add_object(bond, "bond");
-					
-				}
-			}
-		}
+						lwob.add_object(bond, "bond");		
+		} } }
 		std::cout << "\rProcessing bonds: done.   \n";
 	}
 
@@ -266,7 +263,6 @@ int main( int argc, char * argv[] )
 		}
 	}
 
-	std::cout << "DATA STRUCTURES HAVE BEEN MADEN." << std::endl;
 
 	if( out_mode == File_Mode::LWO ) 
 		lwob.write(in.outputFile);
