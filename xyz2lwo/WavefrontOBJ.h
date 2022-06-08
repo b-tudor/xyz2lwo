@@ -81,7 +81,7 @@ class WavefrontOBJ
 
 	// Methods
 	public:
-		WavefrontOBJ();
+		 WavefrontOBJ();
 		~WavefrontOBJ();
 
 		inline void setOutputMode_Unix() { outputMode = outMode::UNIX;  }

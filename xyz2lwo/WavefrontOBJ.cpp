@@ -13,14 +13,14 @@
 
 //  CONSTRUCTORS / DESTRUCTORS  ///////////////////////////////////////////////////////////////////////////////////////
 
-WavefrontOBJ::~WavefrontOBJ() {
+WavefrontOBJ::~WavefrontOBJ() {}
+WavefrontOBJ:: WavefrontOBJ() {
 	#ifdef WIN32
 		outputMode = outMode::MSDOS;
 	#else	
 		outputMode = outMode::UNIX;
 	#endif
 }
-WavefrontOBJ:: WavefrontOBJ() {}
 
 
 

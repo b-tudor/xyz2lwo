@@ -18,6 +18,7 @@ set(SRC
 	xyz2lwo/Chunk_PTAG.cpp
 	xyz2lwo/Chunk_SURF.cpp
 	xyz2lwo/Chunk_TAGS.cpp
+	xyz2lwo/FileGenerator3D.cpp
 	xyz2lwo/IFF.cpp
 	xyz2lwo/LWOB_Builder.cpp
 	xyz2lwo/WavefrontOBJ.cpp

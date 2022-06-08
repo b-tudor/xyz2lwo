@@ -16,7 +16,7 @@ LWOB_Builder:: LWOB_Builder() {
 	lw_object.add_chunk(layer_data);
 	
 	lwob.add_chunk(lw_object);
-	
+
 }
 
 

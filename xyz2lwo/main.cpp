@@ -1,6 +1,7 @@
 #include "args.h"
 #include "Chemical_Data.h"  // https://github.com/b-tudor/Chemical_Data
 #include "Chunk_SURF.h"
+#include "FileGenerator3D.h"
 #include "LWOB_Builder.h"
 #include "WavefrontOBJ.h"
 #include "Sphere.h"
@@ -25,7 +26,7 @@ typedef struct _xyzAtom {
 
 const int bond_side_count = 10;           // Number of sides in tube objects that form ball-and-stick bonds
 
-
+EOL_Mode determineEOLstyle(std::string filename);
 
 
 
@@ -36,28 +37,28 @@ int main( int argc, char * argv[] )
 	params in;
 	processArgs(argc, argv, in); 
 	// Create aliases for param data for ease of reference:
-	const bool& bonds           = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
-	const bool& tessDepth       = in.tessellation_depth; // Recursive levels of triangular sphere approximation
-	const File_Mode&   out_mode = in.output_mode;        // Type of output file to generate
-	const Newline_Mode EOL_mode = in.newline_mode;       // Will text files mark EOL with LF or CR/LF
-	const std::string&  outFile = in.outputFile;         // output file name
+	const bool&              bonds = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
+	const bool&          tessDepth = in.tessellation_depth; // Recursive levels of triangular sphere approximation
+	const File_Mode        outMode = in.output_mode;
+	const EOL_Mode         eolMode = in.newline_mode;       // Will text files mark EOL with LF or CR/LF
+	const std::string& outFilename = in.outputFile;         // output file name
 	
 
 	std::cout << "Output  mode: " << ((in. output_mode == File_Mode::LWO       ) ? "LWO\n" : "OBJ\n");
-	std::cout << "Newline mode: " << ((in.newline_mode == Newline_Mode::DEFAULT) ? "DEFAULT\n" : ((in.newline_mode == Newline_Mode::MSDOS) ? "MS-DOS\n" : "UNIX\n" ));
-	
-	
-	if (in.newline_mode == Newline_Mode::DEFAULT) {
+	std::cout << "Newline mode: " << ((in.newline_mode == EOL_Mode::DEFAULT) ? "DEFAULT\n" : ((in.newline_mode == EOL_Mode::CRLF) ? "MS-DOS\n" : "UNIX\n" ));
+
+
+	if (in.newline_mode == EOL_Mode::DEFAULT) {
 		// Discover NewLine encoding of the input file
-		in.newline_mode = Newline_Mode::UNIX;
+		in.newline_mode = EOL_Mode::LF;
 	}
-	
+
 
 
 	// Read the atomic coordinates from the input file //////////////////////////////////////////////////
 	std::ifstream infile(in.inputFile);
 	if (!infile) {
-		std::cout << "Could not open file: " << in.inputFile << "\nExiting...\n";
+		std::cout << "Could not open input file: " << in.inputFile << "\nExiting...\n";
 		return 0;
 	}
 
@@ -66,8 +67,8 @@ int main( int argc, char * argv[] )
 
 	infile >> atom_count;
 	std::string line;
-	std::getline(infile, line);
-	std::getline(infile, line);
+	std::getline( infile, line );
+	std::getline( infile, line );
 
 	xyzAtom in_data;
 	int ac = atom_count;
@@ -78,23 +79,12 @@ int main( int argc, char * argv[] )
 	}
 	
 
-	// Generate the geometry from the atomic coordinates ////////////////////////////////////////////////
-	
+	// Declare/Initialize the object that will create our output file. If output is a .lwo file, eol doesn't matter.
+	// If output is an .obj file, then we use whatever the user explicitly set. If the user didn't set anything (i.e.
+	// the EOL mode is set to DEFAULT), then we attempt to preserve whatever style was used in the input file. 
+	FileGenerator3D outFile( outMode, (outMode==File_Mode::OBJ && eolMode==EOL_Mode::DEFAULT) ? determineEOLstyle(in.inputFile) : eolMode );
 
-	LWOB_Builder lwob;
-	WavefrontOBJ  obj;
-	if( in.output_mode==File_Mode::OBJ ){
-		if(EOL_mode==Newline_Mode::MSDOS)
-			obj.setOutputMode_MSDOS();
-		else if (EOL_mode==Newline_Mode::UNIX)
-			obj.setOutputMode_Unix();
-		else
-			#ifdef WIN32
-				obj.setOutputMode_MSDOS();
-			#else
-				obj.setOutputMode_Unix();
-			#endif
-	}
+	
 
 	int count = 0;
 	// Add the atoms to the file
@@ -116,12 +106,8 @@ int main( int argc, char * argv[] )
 		
 		// Store points based on the desired output type
 
-		// Add atomic geometry to the appropriate data structure (as determined by output type)
-		if( out_mode == File_Mode::LWO )
-			lwob.add_object( atomicSphere, atom.atomic_symbol );
-		else
-		if( out_mode == File_Mode::OBJ )
-			obj.add_object(atomicSphere, atom.atomic_symbol);
+		// Add atomic geometry to the output file
+		outFile.add_object( atomicSphere, atom.atomic_symbol);
 	}
 
 	std::cout << "\rProcessing atoms: done.   \n";
@@ -144,15 +130,13 @@ int main( int argc, char * argv[] )
 					Tube bond(I, J, 0.08, bond_side_count);
 
 					// Add bond geometry to the appropriate data structure (as determined by output type)
-					if( File_Mode::OBJ == out_mode )
-						obj.add_object(bond, "bond" );
-					else 
-					if( File_Mode::LWO == out_mode )
-						lwob.add_object(bond, "bond");		
-		} } }
+					outFile.add_object(bond, "bond" );
+				} 
+			} // for j
+		} // for i
 		std::cout << "\rProcessing bonds: done.   \n";
 	}
-
+/*
 	if (out_mode == File_Mode::LWO) {
 
 		// Add surfaces to the file
@@ -262,17 +246,16 @@ int main( int argc, char * argv[] )
 			lwob.add_surface(surf_bond);
 		}
 	}
-
-
-	if( out_mode == File_Mode::LWO ) 
-		lwob.write(in.outputFile);
-	else
-	if( out_mode == File_Mode::OBJ )
-		obj.write(in.outputFile);
-			
+*/
+	outFile.write(in.outputFile);
 	
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 
 
+
+
+EOL_Mode determineEOLstyle(std::string filename) {
+	return EOL_Mode::CRLF;
+}

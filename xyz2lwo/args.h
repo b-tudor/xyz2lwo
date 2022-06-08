@@ -6,17 +6,16 @@
 #include <iostream>
 #include <sstream>
 
+#include "FileGenerator3D.h"
 
-enum class File_Mode    { LWO, OBJ };
-enum class Newline_Mode { MSDOS, UNIX, DEFAULT };
 
 typedef struct _parameters{
-    std::string          inputFile;
-    std::string         outputFile;
-    bool                draw_bonds = false;                 // Draw ball-and-stick style bonds between atoms?
-    int         tessellation_depth = 3;                     // Depth by which to tesselate spheres representing atoms
-    File_Mode          output_mode = File_Mode::LWO;        // Default output file type is LWO
-    Newline_Mode      newline_mode = Newline_Mode::DEFAULT; // Line-endings to use in text-files. 
+    std::string     inputFile;
+    std::string    outputFile;
+    bool           draw_bonds = false;   // Draw ball-and-stick style bonds between atoms?
+    int    tessellation_depth = 3;       // Depth by which to tesselate spheres representing atoms
+    File_Mode     output_mode = File_Mode::LWO;    // Default output file type is LWO
+    EOL_Mode     newline_mode = EOL_Mode::DEFAULT; // Line-endings to use in text-files. 
 
 } params;
  
@@ -108,7 +107,7 @@ void displayUsageAndDie( char* progname, params& p ) {
     std::cout << "  " << progName_wo_path << " H2O.xyz\n";
     std::cout << "  " << progName_wo_path << " H2O.xyz -t 3 -o water.lwo\n";
     std::cout << "  " << progName_wo_path << " benzene.xyz -O C6H6_OBJ_file -b -l\n\n";
-    exit(0);
+    exit(EXIT_FAILURE);
 }
 
 
@@ -195,23 +194,23 @@ void processArgs( int argc, char * argv[], params& p ) {
             // Is user requesting MS-DOS/Windows style output on text files (.obj files)?
             else if( !strncmp( issArg.str().c_str(), "-w", 3 )) {
                 n++;
-                if( p.newline_mode == Newline_Mode::UNIX ) {
+                if( p.newline_mode == EOL_Mode::LF ) {
                     std::cerr << "ERROR: Conflicting newline modes requested (-l/-w)\n";
                     std::cout << "Exiting..." << std::endl;
                     exit(0);
                 }
-                p.newline_mode = Newline_Mode::MSDOS;
+                p.newline_mode = EOL_Mode::CRLF;
             }
 
             // Is user requesting Unix/Linux/MacOS style output on text files (.obj files)?
             else if (!strncmp(issArg.str().c_str(), "-l", 3)) {
                 n++;
-                if( p.newline_mode == Newline_Mode::MSDOS ) {
+                if( p.newline_mode == EOL_Mode::CRLF ) {
                     std::cerr << "ERROR: Conflicting newline modes requested (-l/-w)\n";
                     std::cout << "Exiting..." << std::endl;
                     exit(0);
                 }
-                p.newline_mode = Newline_Mode::UNIX;
+                p.newline_mode = EOL_Mode::LF;
             }
 
             else {
@@ -259,5 +258,5 @@ void processArgs( int argc, char * argv[], params& p ) {
     }
 }
 
-#endif	/* ARGS_H */
+#endif	// ARGS_H 
 
