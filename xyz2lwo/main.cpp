@@ -24,15 +24,19 @@ typedef struct _xyzAtom {
 	double radius = 0;
 } xyzAtom;
 
-const int bond_side_count = 10;           // Number of sides in tube objects that form ball-and-stick bonds
+           // Number of sides in tube objects that form ball-and-stick bonds
 
-EOL_Mode determineEOLstyle(std::string filename);
+
+
+EOL_Mode determine_EOL_style( std::string filename );
 
 
 
 
 int main( int argc, char * argv[] )
 {
+	
+
 	// Get filename and user settings from the command line ////////////////////////////////////////////
 	params in;
 	processArgs(argc, argv, in); 
@@ -40,36 +44,21 @@ int main( int argc, char * argv[] )
 	const bool&              bonds = in.draw_bonds;         // Are we drawings ball-and-stick style sticks?
 	const bool&          tessDepth = in.tessellation_depth; // Recursive levels of triangular sphere approximation
 	const File_Mode        outMode = in.output_mode;
-	const EOL_Mode         eolMode = in.newline_mode;       // Will text files mark EOL with LF or CR/LF
 	const std::string& outFilename = in.outputFile;         // output file name
+	const EOL_Mode         eolMode = (in.newline_mode==EOL_Mode::DEFAULT) ? determine_EOL_style(in.inputFile) : in.newline_mode;
+	const int      bond_side_count = in.bond_sides;
 	
-
-	std::cout << "Output  mode: " << ((in. output_mode == File_Mode::LWO       ) ? "LWO\n" : "OBJ\n");
-	std::cout << "Newline mode: " << ((in.newline_mode == EOL_Mode::DEFAULT) ? "DEFAULT\n" : ((in.newline_mode == EOL_Mode::CRLF) ? "MS-DOS\n" : "UNIX\n" ));
-
-
-	if (in.newline_mode == EOL_Mode::DEFAULT) {
-		// Discover NewLine encoding of the input file
-		in.newline_mode = EOL_Mode::LF;
-	}
-
-
-
-	// Read the atomic coordinates from the input file //////////////////////////////////////////////////
-	std::ifstream infile(in.inputFile);
-	if (!infile) {
-		std::cout << "Could not open input file: " << in.inputFile << "\nExiting...\n";
-		return 0;
-	}
-
 	int atom_count = 0;
 	std::vector<xyzAtom> atom_list;
 
-	infile >> atom_count;
+	std::ifstream infile(in.inputFile); // input xyz file
+	infile >> atom_count;               // Line 1 of the xyz file is the atom count
 	std::string line;
-	std::getline( infile, line );
-	std::getline( infile, line );
+	std::getline( infile, line );      // Clear the first line
+	std::getline( infile, line );      // Clear the second line of the xyz file (a comment line)
 
+
+	// Parse the remainder of the input file and construct a list of the atoms contained therein (with xyz coords for each)
 	xyzAtom in_data;
 	int ac = atom_count;
 	while (ac-- && (infile >> in_data.atomic_symbol >> in_data.x >> in_data.y >> in_data.z)) {
@@ -77,12 +66,13 @@ int main( int argc, char * argv[] )
 		in_data.radius        = Chemical_Data::atomic_radius_empirical(in_data.atomic_number);
 		atom_list.push_back(in_data);
 	}
-	
+	infile.close();
 
+	
 	// Declare/Initialize the object that will create our output file. If output is a .lwo file, eol doesn't matter.
 	// If output is an .obj file, then we use whatever the user explicitly set. If the user didn't set anything (i.e.
 	// the EOL mode is set to DEFAULT), then we attempt to preserve whatever style was used in the input file. 
-	FileGenerator3D outFile( outMode, (outMode==File_Mode::OBJ && eolMode==EOL_Mode::DEFAULT) ? determineEOLstyle(in.inputFile) : eolMode );
+	FileGenerator3D outFile( outMode, eolMode );
 
 	
 
@@ -136,7 +126,11 @@ int main( int argc, char * argv[] )
 		} // for i
 		std::cout << "\rProcessing bonds: done.   \n";
 	}
-/*
+
+
+
+
+	/*
 	if (out_mode == File_Mode::LWO) {
 
 		// Add surfaces to the file
@@ -246,7 +240,8 @@ int main( int argc, char * argv[] )
 			lwob.add_surface(surf_bond);
 		}
 	}
-*/
+	*/
+
 	outFile.write(in.outputFile);
 	
 	return EXIT_SUCCESS;
@@ -255,7 +250,36 @@ int main( int argc, char * argv[] )
 
 
 
+EOL_Mode system_default_EOL() {
+	#ifdef WIN32
+		return EOL_Mode::CRLF;
+	#else	
+		return EOL_Mode::LF;
+	#endif
+}
+EOL_Mode determine_EOL_style( std::string filename ) {
 
-EOL_Mode determineEOLstyle(std::string filename) {
-	return EOL_Mode::CRLF;
+	std::string line;
+	std::ifstream inFile(filename);
+	// If we can't open the file, use the default encoding for the system on which this is compiled
+	// Read the first line from the file and then close it--the first line is all we need
+	if( ! inFile ) 
+		return system_default_EOL();
+	std::getline( inFile, line );
+	inFile.close();
+
+	
+	const char carriage_return = (char) 13; // ASCII code for carriage return is 13
+	const int last_char_index = line.length() - 1;
+
+	// out of bounds?
+	if(last_char_index < 0)
+		return system_default_EOL();
+
+	// Check the last character of the line to see if it is a carriage return
+	const char last_char = line.c_str()[last_char_index];
+	if( last_char == carriage_return ) 
+		return EOL_Mode::CRLF;
+	
+	return EOL_Mode::LF;
 }

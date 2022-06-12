@@ -14,10 +14,23 @@ typedef struct _parameters{
     std::string    outputFile;
     bool           draw_bonds = false;   // Draw ball-and-stick style bonds between atoms?
     int    tessellation_depth = 3;       // Depth by which to tesselate spheres representing atoms
+    int            bond_sides = 20;      // Number of side with which to render each bond
     File_Mode     output_mode = File_Mode::LWO;    // Default output file type is LWO
     EOL_Mode     newline_mode = EOL_Mode::DEFAULT; // Line-endings to use in text-files. 
 
 } params;
+
+
+
+bool string_is_fully_numeric(char* s) {
+    int len = strlen(s);
+    for( int i=0; i<len; i++) {
+        short char_code = (int) s[i];
+        if( char_code < 48 || char_code > 57 )
+            return false;
+    }
+    return true;
+}
  
 
 
@@ -71,10 +84,10 @@ bool filename_ends_w_obj(std::string fname) {
 
 
 void displayUsageAndDie( char* progname, params& p ) {
-    
+    params default_values;
     char *progName_wo_path = stripPath( progname );
     std::cout << "\n";
-    std::cout << progName_wo_path << " takes an .XYZ molecular geometry file as input and outputs a high quality geometry file\n";
+    std::cout << progName_wo_path << " takes an .XYZ atomistic configuration file as input and outputs a high quality geometry file\n";
     std::cout << "suitable for generating photorealistic images in ray tracing software. LWO files are for use with\n";
     std::cout << "Lightwave 3D, but the .obj file type is suitable for use in a wide variety of renderers (Blender,\n";
     std::cout << "Maya, etc.).\n\n";
@@ -86,21 +99,22 @@ void displayUsageAndDie( char* progname, params& p ) {
     std::cout << "Options:\n\n";
 
     std::cout << "  -o FILENAME     Output file name.\n";
-    std::cout << "  -O FILENAME        NOTE: If an output file name is not specified, the output file will have the\n";
+    std::cout << "  -O FILENAME         If an output file name is not specified, the output file will have the\n";
     std::cout << "                      same name as the input file but the extension will be replaced with \".lwo\".\n";
     std::cout << "                     NOTE: If FILENAME has an.obj extension, the output file produced\n";
     std::cout << "                      will be a Wavefront (.obj) file. IF THE CAPITAL -O OPTION IS USED, the output\n";
     std::cout << "                      file will be a Wavefront file, regardless of the file name. \n";
-    std::cout << "  -b              Use this option to draw bonds.\n";
+    std::cout << "  -b [SIDES]      Use this option to draw bonds. Specify the optional parameter SIDES to set the number\n";
+    std::cout << "                      of sides with which each bond should be rendered. The default value is " << default_values.bond_sides << "\n";
     std::cout << "  -t DEPTH        Levels of tesselation to use in approximating spherical geometry via polygons.\n";
-    std::cout << "                     A tesselation level of 0 will result in each atom appearing as a diamond comprised\n"; 
-    std::cout << "                     of 6 triangular polygons. Each tesselation level will multiply the number of faces\n";
-    std::cout << "                     by 4, such that level 6 will generate 24,576 polygons per atom.\n";
-    std::cout << "  -l -w           When writing OBJ files, " << progName_wo_path << " will attempt to preserve the newline\n";
-    std::cout << "                     character codes used by the input file. To force Unix/Linux style end-of-line\n"; 
-    std::cout << "                     control codes (LF), use the -l option. To force MS-DOS/Windows style EOL encoding\n";
-    std::cout << "                     (CR/LF), use the -w option. These options only matter when the output format is a\n";
-    std::cout << "                     Wavefront (.obj) file.\n\n";
+    std::cout << "                      A tesselation level of 0 will result in each atom appearing as a diamond comprised\n"; 
+    std::cout << "                      of 6 triangular polygons. Each tesselation level will multiply this number of faces\n";
+    std::cout << "                      by 4, such that level 6 will generate 24,576 polygons per atom.\n";
+    std::cout << "  -l              When writing OBJ files, " << progName_wo_path << " will attempt to preserve the newline\n";
+    std::cout << "  -w                  character codes used by the input file. To force Unix/Linux style end-of-line\n"; 
+    std::cout << "                      control codes (LF), use the -l option. To force MS-DOS/Windows style EOL encoding\n";
+    std::cout << "                      (CR/LF), use the -w option. These options only matter when the output format is a\n";
+    std::cout << "                      Wavefront (.obj) file.\n\n";
     
     std::cout << "Sample commands:\n\n";
 
@@ -125,10 +139,29 @@ void processArgs( int argc, char * argv[], params& p ) {
             
             std::istringstream issArg( argv[n] ); // for convenient type conversion from strings
             
-            // Is user requesting that bonds be drawn? 
+            // IS USER REQUESTING THAT BONDS BE DRAWN? 
             if( !strncmp( issArg.str().c_str(), "-b", 3 )) {
                 n++;
                 p.draw_bonds = true;
+
+                // WERE NUMBER OF BOND SIDES SPECIFIED? 
+                if( (n<argc) && string_is_fully_numeric(argv[n]) ) {
+                    std::istringstream issValueToken( argv[n] );
+				    issValueToken >> p.bond_sides;
+                    if( ! issValueToken ) {
+                        std::cout << "ERROR: Unable to parse the quantity specified for bond side count.\n";
+                        displayUsageAndDie(argv[0], p);
+                    }
+                    if( p.bond_sides < 3) {
+                        p.bond_sides = 3;
+                        std::cout << "WARNING: Minimum value for bond-side setting is 3.\n";
+                    }
+                    if( p.bond_sides > 100) {
+                        p.bond_sides = 100;
+                        std::cout << "WARNING: Maximum value for bond-side setting is 100.\n";
+                    }
+                    n++;
+                }
             }
 
             // USER SPECIFIED OUTPUT FILE?
